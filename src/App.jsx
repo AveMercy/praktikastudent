@@ -17,7 +17,7 @@ const App = () => {
     ];
 
     return (
-        <div className="flex h-screen w-full bg-[#070b14] overflow-hidden p-4 md:p-6 gap-4 md:gap-6">
+        <div className="flex h-screen w-full bg-[#070b14] overflow-hidden p-4 md:p-6 gap-4 md:gap-6 antialiased">
 
             {/* МОБИЛЬНАЯ КНОПКА МЕНЮ */}
             <button

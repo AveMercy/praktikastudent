@@ -1,58 +1,40 @@
 @import "tailwindcss";
 
-/* 1. Полный сброс всех дефолтных центрирований Vite */
-:root {
-  color-scheme: dark;
-}
+:root { color-scheme: dark; }
 
 html, body, #root {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden; /* Чтобы не было двойной прокрутки */
-}
-
-body {
+  height: 100%; width: 100%;
+  margin: 0; padding: 0;
+  overflow: hidden;
   background-color: #070b14;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* 2. Тонкая настройка скролла для внутренних блоков */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.2);
-  border-radius: 10px;
-}
-
-/* 3. Утилита для свечения (чтобы не писать длинные классы в JSX) */
-.glow-effect {
-  position: absolute;
-  pointer-events: none;
-  filter: blur(100px);
-  border-radius: 50%;
-  z-index: 0;
-}
-aside, main, .glass-panel {
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-/* Оптимизация для Firefox: если блюр тормозит, уменьшаем его или заменяем на более плотный фон */
+/* ФИКС ДЛЯ FIREFOX */
 @-moz-document url-prefix() {
+  /* Отключаем тяжелый блюр и заменяем на сплошной цвет */
   aside, main, .glass-panel {
-    backdrop-filter: blur(8px); /* Уменьшаем радиус размытия для FF */
-    background: rgba(10, 17, 32, 0.95) !important; /* Делаем фон плотнее */
+    backdrop-filter: none !important;
+    background-color: #0d1526 !important; /* Глубокий темный цвет */
+  }
+
+  /* Ускоряем рендеринг за счет упрощения теней */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
   }
 }
 
-/* Плавный скролл */
-html {
-  scroll-behavior: smooth;
+/* Аппаратное ускорение для всех браузеров */
+aside, main {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Тонкий скроллбар */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.2);
+  border-radius: 10px;
 }
