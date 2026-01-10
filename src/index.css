@@ -39,3 +39,20 @@ body {
   border-radius: 50%;
   z-index: 0;
 }
+aside, main, .glass-panel {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Оптимизация для Firefox: если блюр тормозит, уменьшаем его или заменяем на более плотный фон */
+@-moz-document url-prefix() {
+  aside, main, .glass-panel {
+    backdrop-filter: blur(8px); /* Уменьшаем радиус размытия для FF */
+    background: rgba(10, 17, 32, 0.95) !important; /* Делаем фон плотнее */
+  }
+}
+
+/* Плавный скролл */
+html {
+  scroll-behavior: smooth;
+}
