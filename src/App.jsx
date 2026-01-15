@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import Lesson1 from './lessons/Lesson1';
+import Lesson2 from './lessons/Lesson2';
+
+
 import {
     ChevronDown, ChevronRight, BookOpen, FolderOpen, Terminal, Layers, Menu, X
 } from 'lucide-react';
@@ -11,9 +14,9 @@ const App = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const lessons = [
-        { id: 1, title: 'Введение и ТЗ' },
-        { id: 2, title: 'Backend на Node.js' },
-        { id: 3, title: 'Frontend на React' },
+        { id: 1, title: 'Введение' },
+        { id: 2, title: 'Техническое задание ' },
+        { id: 3, title: 'Дизайн в Figma' },
     ];
 
     return (
@@ -39,7 +42,7 @@ const App = () => {
                         <div className="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-600/20">
                             <Layers size={22} className="text-white" />
                         </div>
-                        <h1 className="text-xl font-bold tracking-tight text-white uppercase italic">Praktika</h1>
+                        <h1 className="text-xl font-bold tracking-tight text-white uppercase ">JS</h1>
                     </div>
                 </div>
 
@@ -96,6 +99,8 @@ const App = () => {
 
                         <div className="animate-in fade-in slide-in-from-right-8 duration-700">
                             {activeLesson === 1 && <Lesson1 mode={activeMode} />}
+                            {activeLesson === 2 && <Lesson2 mode={activeMode} />}
+
                         </div>
                     </div>
                 </div>
