@@ -21,7 +21,7 @@ const lessons = [
     { id: 2, title: 'Техническое задание' },
     { id: 3, title: 'SEO и структура' },
     { id: 4, title: 'Дизайн в Figma' },
-    { id: 5, title: 'Система контроля версий' },
+    { id: 5, title: 'Git' },
     { id: 6, title: 'Backend на Express' },
     { id: 7, title: 'Работа с данными' },
 ];
