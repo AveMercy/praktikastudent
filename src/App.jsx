@@ -1,49 +1,120 @@
 import React, { useState } from 'react';
+// Добавляем импорт Link
+import { BrowserRouter, Routes, Route, Navigate, useParams, useNavigate, Link } from 'react-router-dom';
 import Lesson1 from './lessons/Lesson1';
 import Lesson2 from './lessons/Lesson2';
+import Lesson3 from './lessons/Lesson3.jsx';
+import Lesson4 from './lessons/Lesson4.jsx';
+import Lesson5 from './lessons/Lesson5.jsx';
+import Lesson6 from './lessons/Lesson6.jsx';
+import Lesson7 from './lessons/Lesson7.jsx';
 
+// Импортируем твой новый компонент Home
+import Home from './components/Home';
 
 import {
     ChevronDown, ChevronRight, BookOpen, FolderOpen, Terminal, Layers, Menu, X
 } from 'lucide-react';
 
-const App = () => {
-    const [activeLesson, setActiveLesson] = useState(1);
-    const [activeMode, setActiveMode] = useState('theory');
-    const [expandedLesson, setExpandedLesson] = useState(1);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+const lessons = [
+    { id: 1, title: 'Введение' },
+    { id: 2, title: 'Техническое задание' },
+    { id: 3, title: 'SEO и структура' },
+    { id: 4, title: 'Дизайн в Figma' },
+    { id: 5, title: 'Система контроля версий' },
+    { id: 6, title: 'Backend на Express' },
+    { id: 7, title: 'Работа с данными' },
+];
 
-    const lessons = [
-        { id: 1, title: 'Введение' },
-        { id: 2, title: 'Техническое задание ' },
-        { id: 3, title: 'Дизайн в Figma' },
-    ];
+const ContentWrapper = () => {
+    const { id, mode } = useParams();
+    const activeLesson = parseInt(id);
 
     return (
-        <div className="flex h-screen w-full bg-[#070b14] overflow-hidden p-4 md:p-6 gap-4 md:gap-6 antialiased">
+        <>
+            <header className="mb-12">
+                <div className="flex items-center gap-2 text-blue-500 text-xs font-bold uppercase tracking-[0.2em] mb-4">
+                    <span>Занятие {activeLesson}</span>
+                    <span className="text-slate-700">/</span>
+                    <span className="text-slate-400">{mode}</span>
+                </div>
+            </header>
 
+            <div className="animate-in fade-in slide-in-from-right-8 duration-700">
+                {activeLesson === 1 && <Lesson1 mode={mode} />}
+                {activeLesson === 2 && <Lesson2 mode={mode} />}
+                {activeLesson === 3 && <Lesson3 mode={mode} />}
+                {activeLesson === 4 && <Lesson4 mode={mode} />}
+                {activeLesson === 5 && <Lesson5 mode={mode} />}
+                {activeLesson === 6 && <Lesson6 mode={mode} />}
+                {activeLesson === 7 && <Lesson7 mode={mode} />}
+            </div>
+        </>
+    );
+};
+
+const App = () => {
+    return (
+        <BrowserRouter>
+            <Routes>
+                {/* Теперь передаем Home как контент для главного пути */}
+                <Route path="/" element={<MainLayout content={<Home />} />} />
+                {/* Передаем ContentWrapper для лекций */}
+                <Route path="/lesson/:id/:mode" element={<MainLayout content={<ContentWrapper />} />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+        </BrowserRouter>
+    );
+};
+
+// Принимаем пропс content
+const MainLayout = ({ content }) => {
+    const { id, mode } = useParams();
+    const navigate = useNavigate();
+
+    // Если id нет (мы на главной), активная лекция будет null
+    const activeLesson = id ? parseInt(id) : null;
+    const activeMode = mode;
+
+    const [expandedLesson, setExpandedLesson] = useState(activeLesson);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const changeRoute = (newId, newMode) => {
+        navigate(`/lesson/${newId}/${newMode}`);
+        setIsMobileMenuOpen(false);
+    };
+
+    return (
+        <div className="flex h-screen w-full bg-[#070b14] overflow-hidden p-4 md:p-6 gap-4 md:gap-6 antialiased text-slate-300">
             {/* МОБИЛЬНАЯ КНОПКА МЕНЮ */}
             <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="fixed bottom-6 right-6 z-50 p-4 bg-blue-600 rounded-full shadow-2xl md:hidden text-white"
+                className="fixed bottom-6 right-6 z-50 p-4 bg-blue-600 rounded-full md:hidden text-white shadow-2xl"
             >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
 
-            {/* ЛЕВАЯ ПАНЕЛЬ (САЙДБАР) */}
+            {/* САЙДБАР */}
             <aside className={`
-        fixed inset-y-6 left-4 z-40 w-[280px] md:relative md:inset-0
-        bg-[#0a1120]/80 backdrop-blur-xl border border-white/5 
-        rounded-[2rem] flex flex-col shadow-2xl transition-all duration-500
-        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-[120%] md:translate-x-0'}
-      `}>
+                fixed inset-y-6 left-4 z-40 w-[280px] md:relative md:inset-0
+                bg-[#0a1120]/80 backdrop-blur-xl border border-white/5 
+                rounded-[2rem] flex flex-col shadow-2xl transition-all duration-500
+                ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-[120%] md:translate-x-0'}
+            `}>
                 <div className="p-8 border-b border-white/5">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-600/20">
+                    {/* ЛОГОТИП С СЫЛКОЙ НА ГЛАВНУЮ */}
+                    <Link
+                        to="/"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center gap-3 group"
+                    >
+                        <div className="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-600/20 group-hover:scale-110 transition-transform">
                             <Layers size={22} className="text-white" />
                         </div>
-                        <h1 className="text-xl font-bold tracking-tight text-white uppercase ">JS</h1>
-                    </div>
+                        <div>
+                            <h1 className="text-xl font-bold tracking-tight text-white uppercase leading-none">JS </h1>
+                        </div>
+                    </Link>
                 </div>
 
                 <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2 custom-scrollbar">
@@ -63,19 +134,19 @@ const App = () => {
                                         icon={<BookOpen size={16}/>}
                                         label="Теория"
                                         active={activeLesson === lesson.id && activeMode === 'theory'}
-                                        onClick={() => { setActiveLesson(lesson.id); setActiveMode('theory'); setIsMobileMenuOpen(false); }}
+                                        onClick={() => changeRoute(lesson.id, 'theory')}
                                     />
                                     <SideMenuItem
                                         icon={<FolderOpen size={16}/>}
                                         label="Файлы"
                                         active={activeLesson === lesson.id && activeMode === 'files'}
-                                        onClick={() => { setActiveLesson(lesson.id); setActiveMode('files'); setIsMobileMenuOpen(false); }}
+                                        onClick={() => changeRoute(lesson.id, 'files')}
                                     />
                                     <SideMenuItem
                                         icon={<Terminal size={16}/>}
                                         label="Практика"
                                         active={activeLesson === lesson.id && activeMode === 'practice'}
-                                        onClick={() => { setActiveLesson(lesson.id); setActiveMode('practice'); setIsMobileMenuOpen(false); }}
+                                        onClick={() => changeRoute(lesson.id, 'practice')}
                                     />
                                 </div>
                             )}
@@ -84,24 +155,12 @@ const App = () => {
                 </nav>
             </aside>
 
-            {/* ПРАВАЯ ЧАСТЬ (КОНТЕНТ) */}
+            {/* КОНТЕНТ */}
             <main className="flex-1 h-full overflow-hidden bg-white/[0.02] backdrop-blur-sm border border-white/5 rounded-[2.5rem] relative">
                 <div className="h-full overflow-y-auto custom-scrollbar p-6 md:p-12 lg:p-16">
                     <div className="max-w-4xl mx-auto relative z-10">
-                        {/* Header контента */}
-                        <header className="mb-12">
-                            <div className="flex items-center gap-2 text-blue-500 text-xs font-bold uppercase tracking-[0.2em] mb-4">
-                                <span>Занятие {activeLesson}</span>
-                                <span className="text-slate-700">/</span>
-                                <span className="text-slate-400">{activeMode}</span>
-                            </div>
-                        </header>
-
-                        <div className="animate-in fade-in slide-in-from-right-8 duration-700">
-                            {activeLesson === 1 && <Lesson1 mode={activeMode} />}
-                            {activeLesson === 2 && <Lesson2 mode={activeMode} />}
-
-                        </div>
+                        {/* Здесь рендерится либо Home, либо ContentWrapper */}
+                        {content}
                     </div>
                 </div>
 
