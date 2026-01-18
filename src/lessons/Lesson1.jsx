@@ -277,6 +277,7 @@ const Lesson1 = ({ mode }) => {
                 <div className="space-y-6">
                     <h2 className="text-3xl font-bold mb-8 text-white">Материалы</h2>
                     <FileDownload name="Пример выполнения.docx" url="/downloads/zadanie(1zanyatie).docx"/>
+                    <FileDownload name="Презентация.pdf" url="/downloads/less1.pdf"/>
                 </div>
             )}
 

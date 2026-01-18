@@ -101,8 +101,8 @@ const Lesson2 = ({ mode }) => {
                     <section className="mt-12">
                         <h3 className="text-2xl font-bold text-blue-400 mb-6">3. Наш учебный кейс: GreenShop</h3>
                         <TheoryText>
-                            Чтобы вы наглядно видели процесс разработки, я параллельно с вами буду строить проект <strong>GreenShop — магазин комнатных растений</strong>.
-                            В разделе "Файлы" доступно полное ТЗ этого проекта, которое станет нашим эталоном на весь семестр.
+                            Чтобы вы наглядно видели процесс разработки, я параллельно с вами буду вести проект <strong>GreenShop — магазин растений</strong>.
+                            В разделе "Файлы" доступен пример ТЗ для ваших проектов.
                         </TheoryText>
 
                         <InfoPanel title="MVP проекта (Minimum Viable Product)">
@@ -123,6 +123,7 @@ const Lesson2 = ({ mode }) => {
                         name="Техническое задание.docx"
                         url="/downloads/teh-zadanie(2zanyatie).docx"
                     />
+                    <FileDownload name="Презентация.pdf" url="/downloads/less2.pdf"/>
 
                 </div>
             )}

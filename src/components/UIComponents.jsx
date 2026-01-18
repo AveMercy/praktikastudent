@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { Download, Copy, Check, Info } from 'lucide-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-
 // 1. Текстовый блок
 export const TheoryText = ({ children }) => (
     <p className="text-slate-300 leading-relaxed text-lg mb-6">
@@ -10,12 +9,41 @@ export const TheoryText = ({ children }) => (
     </p>
 );
 
-// 2. Изображение с оформлением
-export const TheoryImage = ({ src, alt = "Иллюстрация" }) => (
-    <div className="my-8 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-        <img src={src} alt={alt} className="w-full object-cover max-h-[500px]" />
-    </div>
-);
+
+// 2. Изображение с простым зумом
+export const TheoryImage = ({ src, alt = "Иллюстрация" }) => {
+    const [showModal, setShowModal] = useState(false);
+
+    return (
+        <>
+            {/* Маленькое изображение */}
+            <div
+                className="my-8 rounded-2xl overflow-hidden border border-white/10 shadow-2xl cursor-pointer"
+                onClick={() => setShowModal(true)}
+            >
+                <img
+                    src={src}
+                    alt={alt}
+                    className="w-full object-cover max-h-[500px]"
+                />
+            </div>
+
+            {/* Большое изображение (модалка) */}
+            {showModal && (
+                <div
+                    className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+                    onClick={() => setShowModal(false)}
+                >
+                    <img
+                        src={src}
+                        alt={alt}
+                        className="max-w-full max-h-[90vh] object-contain"
+                    />
+                </div>
+            )}
+        </>
+    );
+};
 
 // 3. Блок кода с подсветкой и копированием
 export const CodeSnippet = ({ code, language = 'javascript' }) => {

@@ -4,10 +4,12 @@ import { BrowserRouter, Routes, Route, Navigate, useParams, useNavigate, Link } 
 import Lesson1 from './lessons/Lesson1';
 import Lesson2 from './lessons/Lesson2';
 import Lesson3 from './lessons/Lesson3.jsx';
+
 import Lesson4 from './lessons/Lesson4.jsx';
 import Lesson5 from './lessons/Lesson5.jsx';
 import Lesson6 from './lessons/Lesson6.jsx';
 import Lesson7 from './lessons/Lesson7.jsx';
+import Lesson8 from './lessons/Lesson8.jsx';
 
 // Импортируем твой новый компонент Home
 import Home from './components/Home';
@@ -19,11 +21,12 @@ import {
 const lessons = [
     { id: 1, title: 'Введение' },
     { id: 2, title: 'Техническое задание' },
-    { id: 3, title: 'SEO и структура' },
-    { id: 4, title: 'Дизайн в Figma' },
-    { id: 5, title: 'Git' },
-    { id: 6, title: 'Backend на Express' },
-    { id: 7, title: 'Работа с данными' },
+    { id: 3, title: 'Архитектура страницы' },
+
+    { id: 4, title: 'SEO и структура' },
+    { id: 5, title: 'Дизайн в Figma' },
+    { id: 6, title: 'Git' },
+
 ];
 
 const ContentWrapper = () => {
@@ -44,10 +47,12 @@ const ContentWrapper = () => {
                 {activeLesson === 1 && <Lesson1 mode={mode} />}
                 {activeLesson === 2 && <Lesson2 mode={mode} />}
                 {activeLesson === 3 && <Lesson3 mode={mode} />}
+
                 {activeLesson === 4 && <Lesson4 mode={mode} />}
                 {activeLesson === 5 && <Lesson5 mode={mode} />}
                 {activeLesson === 6 && <Lesson6 mode={mode} />}
                 {activeLesson === 7 && <Lesson7 mode={mode} />}
+                {activeLesson === 8 && <Lesson8 mode={mode} />}
             </div>
         </>
     );
