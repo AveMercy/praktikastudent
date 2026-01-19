@@ -15,7 +15,7 @@ const Lesson7 = ({ mode }) => {
             {mode === 'theory' && (
                 <article>
                     <h2 className="text-4xl font-black mb-8 bg-gradient-to-r from-white to-slate-500 bg-clip-text text-transparent">
-                        Лекция 5: Backend-разработка на Express.js
+                        Лекция 7: Backend-разработка на Express.js
                     </h2>
 
                     {/* 1. ЧТО ТАКОЕ EXPRESS */}

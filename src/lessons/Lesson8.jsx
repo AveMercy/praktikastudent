@@ -15,7 +15,7 @@ const Lesson8 = ({ mode }) => {
             {mode === 'theory' && (
                 <article>
                     <h2 className="text-4xl font-black mb-8 bg-gradient-to-r from-white to-slate-500 bg-clip-text text-transparent">
-                        Лекция 6: Работа с данными. PostgreSQL и Sequelize
+                        Лекция 8: Работа с данными. PostgreSQL и Sequelize
                     </h2>
 
                     {/* 1. ЧТО ТАКОЕ РЕЛЯЦИОННАЯ БД */}

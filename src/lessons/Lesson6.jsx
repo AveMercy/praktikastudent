@@ -15,7 +15,7 @@ const Lesson6 = ({ mode }) => {
             {mode === 'theory' && (
                 <article>
                     <h2 className="text-4xl font-black mb-8 bg-gradient-to-r from-white to-slate-500 bg-clip-text text-transparent">
-                        Лекция 4: Система контроля версий Git и сервис GitHub
+                        Лекция 6: Система контроля версий Git и сервис GitHub
                     </h2>
 
                     {/* 1. РАЗНИЦА GIT И GITHUB */}

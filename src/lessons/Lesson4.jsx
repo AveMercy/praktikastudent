@@ -15,7 +15,7 @@ const Lesson4 = ({ mode }) => {
             {mode === 'theory' && (
                 <article>
                     <h2 className="text-4xl font-black mb-8 bg-gradient-to-r from-white to-slate-500 bg-clip-text text-transparent">
-                        Лекция 3: Семантика HTML и основы SEO
+                        Лекция 4: Семантика HTML и основы SEO
                     </h2>
 
                     {/* 1. ЧТО ТАКОЕ SEO И КАРТА САЙТА */}

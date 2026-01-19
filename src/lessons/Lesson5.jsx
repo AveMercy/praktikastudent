@@ -15,7 +15,7 @@ const Lesson5 = ({ mode }) => {
             {mode === 'theory' && (
                 <article>
                     <h2 className="text-4xl font-black mb-8 bg-gradient-to-r from-white to-slate-500 bg-clip-text text-transparent">
-                        Лекция 3: Профессиональный UI-дизайн в Figma для разработчиков
+                        Лекция 5: Профессиональный UI-дизайн в Figma для разработчиков
                     </h2>
 
                     <TheoryText>
@@ -35,20 +35,28 @@ const Lesson5 = ({ mode }) => {
                                 <TheoryText className="text-sm">
                                     Это ваша структура документа. Если вы правильно называете слои (например, Header, Button, Card), это фактически дерево вашего будущего HTML.
                                 </TheoryText>
+                                <div>
+                                <TheoryImage src="/img/less5/1.png">
+                                </TheoryImage>
+                                </div>
                             </div>
 
                             <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5">
                                 <h4 className="text-blue-400 font-bold mb-2  decoration-blue-500/20 underline-offset-4">Frame
                                     (Холст) в центре</h4>
                                 <TheoryText className="text-sm">
-                                "Холст" для расположения ваших элементов.
+                                    "Холст" для расположения ваших элементов.
+                                    <div>
+                                        <TheoryImage src="/img/less5/2.png">
+                                        </TheoryImage>
+                                    </div>
                                 </TheoryText>
                             </div>
 
                             <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5">
-                                <h4 className="text-blue-400 font-bold mb-2  decoration-blue-500/20 underline-offset-4">Inspect Panel (Панель свойств) справа</h4>
+                            <h4 className="text-blue-400 font-bold mb-2  decoration-blue-500/20 underline-offset-4">Inspect Panel (Панель свойств) справа</h4>
                                 <TheoryText className="text-sm">
-                                    Это самая важная часть. В режиме Dev Mode Figma показывает готовые CSS-свойства: background, border-radius, font-size, и даже flexbox-параметры.
+                                   Показывает свойства элементов.
                                 </TheoryText>
                             </div>
                         </div>
