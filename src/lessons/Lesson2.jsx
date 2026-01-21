@@ -123,7 +123,7 @@ const Lesson2 = ({ mode }) => {
                         name="Техническое задание.docx"
                         url="/downloads/teh-zadanie(2zanyatie).docx"
                     />
-                    <FileDownload name="Презентация.pdf" url="/downloads/less2.pdf"/>
+                    <FileDownload name="Презентация.pdf" url="/downloads/pres/less2.pdf"/>
 
                 </div>
             )}

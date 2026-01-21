@@ -145,6 +145,8 @@ const Lesson4 = ({ mode }) => {
                         <ul className="space-y-3">
                             <li><FileDownload name="bad_example.html" url="/downloads/bad_example.html" /></li>
                             <li><FileDownload name="good_example.html" url="/downloads/good_example.html" /></li>
+                            <li><FileDownload name="Презентация.pdf" url="/downloads/pres/less4.pdf"/></li>
+
                         </ul>
                     </div>
                 </div>

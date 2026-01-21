@@ -2,6 +2,7 @@ import React, { useState} from 'react';
 import { Download, Copy, Check, Info } from 'lucide-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { ChevronLeft, ChevronRight, Maximize2, X} from 'lucide-react'; // Добавьте в импорт в начале файла
 // 1. Текстовый блок
 export const TheoryText = ({ children }) => (
     <p className="text-slate-300 leading-relaxed text-lg mb-6">
@@ -10,35 +11,53 @@ export const TheoryText = ({ children }) => (
 );
 
 
-// 2. Изображение с простым зумом
+// 2. Изображение с продвинутым зумом
 export const TheoryImage = ({ src, alt = "Иллюстрация" }) => {
-    const [showModal, setShowModal] = useState(false);
+    const [isZoomed, setIsZoomed] = useState(false);
 
     return (
         <>
-            {/* Маленькое изображение */}
+            {/* Маленькое изображение (Превью) */}
             <div
-                className="my-8 rounded-2xl overflow-hidden border border-white/10 shadow-2xl cursor-pointer"
-                onClick={() => setShowModal(true)}
+                className="relative my-8 rounded-2xl overflow-hidden border border-white/10 shadow-2xl cursor-zoom-in group bg-[#020617]"
+                onClick={() => setIsZoomed(true)}
             >
                 <img
                     src={src}
                     alt={alt}
-                    className="w-full object-cover max-h-[500px]"
+                    className="w-full object-cover max-h-[500px] transition-transform duration-500 group-hover:scale-[1.02]"
                 />
+
+                {/* Индикатор зума при наведении */}
+                <div className="absolute top-4 right-4 p-2 bg-black/50 backdrop-blur-md rounded-lg text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Maximize2 size={18} />
+                </div>
+
+                {/* Легкий градиент снизу для эстетики */}
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
 
-            {/* Большое изображение (модалка) */}
-            {showModal && (
+            {/* Модальное окно (Зум) — стиль как в Carousel */}
+            {isZoomed && (
                 <div
-                    className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
-                    onClick={() => setShowModal(false)}
+                    className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 backdrop-blur-xl animate-in fade-in duration-300"
+                    onClick={() => setIsZoomed(false)}
                 >
+                    {/* Кнопка закрытия */}
+                    <button className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors">
+                        <X size={40} />
+                    </button>
+
                     <img
                         src={src}
                         alt={alt}
-                        className="max-w-full max-h-[90vh] object-contain"
+                        className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-lg animate-in zoom-in-95 duration-300"
                     />
+
+                    {/* Подпись в зуме */}
+                    <div className="absolute bottom-10 px-6 py-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-full text-white text-center">
+                        <p className="text-sm font-medium tracking-wide">{alt}</p>
+                    </div>
                 </div>
             )}
         </>
@@ -133,3 +152,100 @@ export const ImageGrid = ({ images }) => (
         ))}
     </div>
 );
+// 7. Слайдер изображений (Full-width с зумом)
+export const ImageCarousel = ({ images }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isZoomed, setIsZoomed] = useState(false);
+
+    const nextSlide = (e) => {
+        e.stopPropagation();
+        setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    };
+
+    const prevSlide = (e) => {
+        e.stopPropagation();
+        setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    };
+
+    if (!images || images.length === 0) return null;
+
+    return (
+        <>
+            <div className="my-8 group relative w-full overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-[#020617]">
+                {/* Основное изображение — клик открывает зум */}
+                <div
+                    className="relative cursor-zoom-in aspect-video"
+                    onClick={() => setIsZoomed(true)}
+                >
+                    <img
+                        src={images[currentIndex].url}
+                        alt={images[currentIndex].alt}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                    />
+
+                    {/* Кнопка индикации возможности зума */}
+                    <div className="absolute top-4 right-4 p-2 bg-black/50 backdrop-blur-md rounded-lg text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Maximize2 size={18} />
+                    </div>
+
+                    {/* Градиентный оверлей для текста */}
+                    <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                        <p className="text-white text-lg font-bold">
+                            {images[currentIndex].alt}
+                        </p>
+                        <div className="flex items-center gap-4 mt-2">
+                            <span className="text-blue-400 text-xs font-mono tracking-tighter">
+                                STEP {currentIndex + 1} / {images.length}
+                            </span>
+                            <div className="flex gap-1">
+                                {images.map((_, idx) => (
+                                    <div
+                                        key={idx}
+                                        className={`h-1 rounded-full transition-all ${currentIndex === idx ? 'w-4 bg-blue-500' : 'w-1 bg-white/20'}`}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Кнопки навигации */}
+                <button
+                    onClick={prevSlide}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 p-4 rounded-full bg-black/40 hover:bg-blue-600 text-white opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm border border-white/10"
+                >
+                    <ChevronLeft size={28} />
+                </button>
+                <button
+                    onClick={nextSlide}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-4 rounded-full bg-black/40 hover:bg-blue-600 text-white opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm border border-white/10"
+                >
+                    <ChevronRight size={28} />
+                </button>
+            </div>
+
+            {/* Модальное окно (Зум) */}
+            {isZoomed && (
+                <div
+                    className="fixed inset-0 z-[100] bg-black/fb flex items-center justify-center p-4 backdrop-blur-xl animate-in fade-in duration-300"
+                    onClick={() => setIsZoomed(false)}
+                >
+                    <button className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors">
+                        <X size={40} />
+                    </button>
+
+                    <img
+                        src={images[currentIndex].url}
+                        alt={images[currentIndex].alt}
+                        className="max-w-full max-h-[90vh] object-contain shadow-2xl rounded-lg"
+                    />
+
+                    <div className="absolute bottom-10 text-white text-center">
+                        <h4 className="text-xl font-bold">{images[currentIndex].alt}</h4>
+                        <p className="text-white/50 text-sm mt-2">Нажмите в любое место, чтобы закрыть</p>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};

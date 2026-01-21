@@ -147,7 +147,7 @@ const LessonArchitecture = ({ mode }) => {
                     <div className="grid gap-4">
                         <FileDownload
                             name="Презентация.pdf"
-                            url="/downloads/less3.pdf"
+                            url="/downloads/pres/less3.pdf"
                         />
                     </div>
                 </div>
