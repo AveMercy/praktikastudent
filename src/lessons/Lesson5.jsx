@@ -6,7 +6,8 @@ import {
     FileDownload,
     InfoPanel,
     ImageCarousel,
-    ImageGrid
+    ImageGrid,
+    ExternalLinkCard
 } from '../components/UIComponents';
 
 const pract = [
@@ -221,19 +222,20 @@ const Lesson5 = ({ mode }) => {
                 <div className="space-y-6 text-center lg:text-left">
                     <h2 className="text-3xl font-bold mb-8 text-white">Материалы</h2>
                     <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5">
-                        <p className="text-blue-400 font-bold mb-4 uppercase tracking-widest text-xs">Практика</p>
-                        <ul className="space-y-3">
-                            <li><TheoryText className="mb-8 italic underline decoration-blue-500/20 underline-offset-4">
-                                <a
-                                    href="https://www.figma.com/design/KFaEmZi2OevaGufapCXB6A/airbnb--%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80-%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%D0%B0-?node-id=0-1&t=Cms5eBFhtWm1ZFrl-1"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    Ссылка на пример дизайна
-                                </a> </TheoryText></li>
-                                <li><FileDownload name="Презентация.pdf" url="/downloads/pres/less5.pdf"/></li>
+                        <p className="text-blue-400 font-bold mb-4 uppercase tracking-widest text-xs">Практика и ресурсы</p>
+                        <div className="space-y-3">
+                            {/* Вместо обычного li и a используем красивую карточку */}
+                            <ExternalLinkCard
+                                name="Ссылка на пример дизайна"
+                                description="Airbnb — разбор компонентов и структуры в Figma"
+                                url="https://www.figma.com/design/KFaEmZi2OevaGufapCXB6A/airbnb--%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80-%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%D0%B0-?node-id=0-1&t=Cms5eBFhtWm1ZFrl-1"
+                            />
 
-                        </ul>
+                            <FileDownload
+                                name="Презентация.pdf"
+                                url="/downloads/pres/less5.pdf"
+                            />
+                        </div>
                     </div>
                 </div>
             )}

@@ -2,7 +2,7 @@ import React, { useState} from 'react';
 import { Download, Copy, Check, Info } from 'lucide-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { ChevronLeft, ChevronRight, Maximize2, X} from 'lucide-react'; // Добавьте в импорт в начале файла
+import { ChevronLeft, ChevronRight, Maximize2, X, ExternalLink} from 'lucide-react';
 // 1. Текстовый блок
 export const TheoryText = ({ children }) => (
     <p className="text-slate-300 leading-relaxed text-lg mb-6">
@@ -249,3 +249,26 @@ export const ImageCarousel = ({ images }) => {
         </>
     );
 };
+
+// 8. Карточка внешней ссылки (стиль как у загрузки файла)
+export const ExternalLinkCard = ({ name, description, url = "#" }) => (
+    <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-between p-4 my-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-blue-500/10 hover:border-blue-500/30 transition-all group text-left"
+    >
+        <div className="flex items-center gap-4">
+            <div className="p-3 bg-[#0a192f] rounded-xl text-blue-400 group-hover:scale-110 transition-transform">
+                <ExternalLink size={20} />
+            </div>
+            <div>
+                <div className="text-sm font-medium text-white">{name}</div>
+                {description && <div className="text-xs text-slate-500">{description}</div>}
+            </div>
+        </div>
+        <span className="text-[10px] font-bold text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity tracking-widest uppercase">
+            Открыть
+        </span>
+    </a>
+);

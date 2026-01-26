@@ -117,47 +117,17 @@ const Lesson2 = ({ mode }) => {
             {mode === 'files' && (
                 <div className="space-y-6">
                     <h2 className="text-3xl font-bold mb-8 text-white">Материалы к разработке</h2>
-                    <TheoryText>Ниже представлен пример ТЗ.</TheoryText>
-
-                    <FileDownload
-                        name="Техническое задание.docx"
-                        url="/downloads/teh-zadanie(2zanyatie).docx"
-                    />
                     <FileDownload name="Презентация.pdf" url="/downloads/pres/less2.pdf"/>
 
                 </div>
             )}
 
             {/* --- РЕЖИМ ПРАКТИКИ --- */}
+
+            {/* --- РЕЖИМ ПРАКТИКИ --- */}
             {mode === 'practice' && (
-                <div className="space-y-8">
-                    <h2 className="text-3xl font-bold mb-4 text-white">Практическое задание №2</h2>
-                    <div className="p-8 bg-blue-600/5 border border-blue-500/20 rounded-[2.5rem]">
-                        <h4 className="text-xl font-bold text-white mb-6">Задача: Составление ТЗ для вашего проекта</h4>
-                        <TheoryText className="mb-6">
-                            Каждая группа должна составить ТЗ в Google Docs или в Word и выслать в max. Пример выполнения задания находится в файлах к текущей теме
-                        </TheoryText>
-
-                        <div className="space-y-4">
-                            {[
-                                { t: "Краткое описание", d: "2-3 предложения о сути вашего продукта." },
-                                { t: "Цель", d: "Описать назначение проекта" },
-                                { t: "Целевая аудитория", d: "Определить ЦА" },
-
-                                { t: "Функционал", d: "Минимум 7 требований в формате User Stories." },
-                                { t: "Структура", d: "Перечень разделов сайта (Главная, Профиль и т.д.)." },
-                                { t: "Стек", d: "Фиксация технологий (React, Node.js, Express)." },
-                            ].map((item, i) => (
-                                <div key={i} className="flex gap-4 p-4 bg-white/5 rounded-xl border border-white/5">
-                                    <span className="text-blue-500 font-bold">{i+1}.</span>
-                                    <div>
-                                        <p className="text-white font-bold text-sm">{item.t}</p>
-                                        <p className="text-xs text-slate-500">{item.d}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                <div className="flex flex-col items-center justify-center min-h-[300px] border-2 border-dashed border-white/5 rounded-[2.5rem]">
+                    <p className="text-slate-500 italic">Для этой лекции практическое задание не предусмотрено.</p>
                 </div>
             )}
         </div>
