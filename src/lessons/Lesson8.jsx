@@ -1,145 +1,148 @@
 import React from 'react';
 import {
     TheoryText,
-    TheoryImage,
-    CodeSnippet,
-    FileDownload,
     InfoPanel,
-    ImageGrid
+    CodeSnippet,
+    ExternalLinkCard,
+    TheoryImage
 } from '../components/UIComponents';
 
-const Lesson8 = ({ mode }) => {
+const BackendArchitectureLesson = ({ mode }) => {
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-700">
             {/* --- РЕЖИМ ТЕОРИИ --- */}
             {mode === 'theory' && (
                 <article>
                     <h2 className="text-4xl font-black mb-8 bg-gradient-to-r from-white to-slate-500 bg-clip-text text-transparent">
-                        Лекция 8: Работа с данными. PostgreSQL и Sequelize
+                        Лекция 12: Архитектура Backend-приложения (Node.js + Sequelize)
                     </h2>
 
-                    {/* 1. ЧТО ТАКОЕ РЕЛЯЦИОННАЯ БД */}
                     <section className="mb-12">
-                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">1. Что такое Реляционная БД и SQL?</h3>
                         <TheoryText>
-                            В PostgreSQL данные хранятся в строгих структурах — таблицах. Это позволяет нам строить надежные связи между данными.
+                            Когда проект растет, важно, чтобы каждый файл отвечал за свою задачу (<b>Principle of Single Responsibility</b>). Мы будем использовать структуру, где логика отделена от маршрутов, а настройки — от кода.
                         </TheoryText>
+                    </section>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5">
-                                <h4 className="text-blue-400 font-bold mb-2 italic">Таблица</h4>
-                                <p className="text-xs text-slate-400">Это как лист в Excel (например, «Plants» или «Users»).</p>
-                            </div>
-                            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5">
-                                <h4 className="text-purple-400 font-bold mb-2 italic">Строка</h4>
-                                <p className="text-xs text-slate-400">Одна конкретная запись: информация об одном растении.</p>
-                            </div>
-                            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5">
-                                <h4 className="text-emerald-400 font-bold mb-2 italic">Связи</h4>
-                                <p className="text-xs text-slate-400">Главная фишка. Связь «Заказ» → «Пользователь», чтобы знать, кто купил товар.</p>
-                            </div>
+                    {/* 1. СТРУКТУРА ПРОЕКТА */}
+                    <section className="mb-12">
+                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">1. Структура папок и файлов</h3>
+                        <div className="bg-[#020617] p-6 rounded-2xl border border-white/5 font-mono text-sm leading-relaxed text-slate-300">
+                            <p>server/</p>
+                            <p>├── <span className="text-blue-400 font-bold">config/</span> # Настройки (БД, Passport и т.д.)</p>
+                            <p>├── <span className="text-blue-400 font-bold">controllers/</span> # Логика обработки запросов (мозг приложения)</p>
+                            <p>├── <span className="text-blue-400 font-bold">middleware/</span> # Промежуточные фильтры (проверка авторизации)</p>
+                            <p>├── <span className="text-blue-400 font-bold">models/</span> # Описание таблиц базы данных (Sequelize модели)</p>
+                            <p>├── <span className="text-blue-400 font-bold">routes/</span> # Маршруты (API Endpoints)</p>
+                            <p>├── <span className="text-blue-400 font-bold">seeders/</span> # Первичное заполнение БД (например, Админ)</p>
+                            <p>├── <span className="text-blue-400 font-bold">uploads/</span> # Физическое хранение картинок растений</p>
+                            <p>├── <span className="text-blue-300">.env</span> # Секретные ключи (не пушим в Git!)</p>
+                            <p>├── <span className="text-blue-300">app.js</span> # Сборка Express-приложения</p>
+                            <p>└── <span className="text-blue-300">index.js</span> # Точка запуска сервера</p>
                         </div>
                     </section>
 
-                    {/* 2. ЗАЧЕМ НАМ SEQUELIZE */}
-                    <section className="mb-12">
-                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">2. Зачем нам Sequelize?</h3>
-                        <TheoryText>
-                            Писать чистые SQL-запросы в коде бывает сложно и небезопасно. <strong>Sequelize (ORM)</strong> берет это на себя:
-                        </TheoryText>
+                    {/* 2. НАЗНАЧЕНИЕ СЛОЕВ */}
+                    <section className="mb-12 space-y-8">
+                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">2. Назначение слоев (Слои приложения)</h3>
 
-                        <div className="space-y-4 mt-6">
-                            <div className="p-6 border-l-2 border-blue-500 bg-blue-500/5">
-                                <p className="text-sm text-slate-300"><strong>Модели:</strong> Вы описываете, как должен выглядеть объект (юзер или товар) на JavaScript.</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="p-5 bg-white/5 rounded-2xl border border-white/10">
+                                <h4 className="text-white font-bold mb-2 uppercase text-xs tracking-widest text-blue-400">Routes (Пути)</h4>
+                                <p className="text-sm text-slate-400 leading-relaxed">
+                                    Только направления. Например: <code className="text-blue-300 italic">router.post('/login', userController.login)</code>.
+                                    Роут не знает, как работает логин, он просто направляет запрос дальше.
+                                </p>
                             </div>
-                            <div className="p-6 border-l-2 border-purple-500 bg-purple-500/5">
-                                <p className="text-sm text-slate-300"><strong>Автоматизация:</strong> Библиотека сама создает таблицы в Postgres на основе ваших моделей.</p>
-                            </div>
-                            <div className="p-6 border-l-2 border-emerald-500 bg-emerald-500/5">
-                                <p className="text-sm text-slate-300"><strong>Удобство:</strong> Создать запись можно одной командой: <code>User.create()</code>.</p>
+                            <div className="p-5 bg-white/5 rounded-2xl border border-white/10">
+                                <h4 className="text-white font-bold mb-2 uppercase text-xs tracking-widest text-blue-400">Controllers (Логика)</h4>
+                                <p className="text-sm text-slate-400 leading-relaxed">
+                                    Здесь живет "мозг". Контроллер достает данные из <code className="text-blue-300 italic">req.body</code>, обращается к модели и отправляет ответ в JSON.
+                                </p>
                             </div>
                         </div>
+
+                        <InfoPanel title="Почему нельзя всё в одном файле?">
+                            Когда в проекте станет 50 моделей и 200 роутов, один файл будет весить 10 000 строк. В нем невозможно работать командой — вы будете постоянно ловить конфликты в Git.
+                        </InfoPanel>
                     </section>
 
-                    {/* 3. ОБНОВЛЕННАЯ ЛОГИКА */}
+                    {/* 3. СИДЕРЫ */}
                     <section className="mb-12">
-                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">3. Обновленная логика Контроллеров</h3>
-                        <TheoryText>Теперь наши функции работают с реальной базой данных через асинхронные запросы:</TheoryText>
-
-
-
-                        <div className="mt-6">
-                            <CodeSnippet language="javascript" code={`const User = require('../models/User');\n\nconst getUsers = async (req, res) => {\n    try {\n        const users = await User.findAll(); // Достаем всех из БД\n        res.json(users);\n    } catch (e) {\n        res.status(500).json({ message: "Ошибка сервера" });\n    }\n};`} />
-                        </div>
+                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">3. Сиды (Seeders) — Создаем Админа правильно</h3>
+                        <TheoryText>
+                            <b>Seeder</b> — это скрипт, который "сеет" начальные данные в пустую базу. Мы будем использовать его, чтобы создать первого администратора с зашифрованным паролем.
+                        </TheoryText>
+                        <CodeSnippet
+                            language="javascript"
+                            code={`const bcrypt = require('bcrypt');\nconst User = require('../models/User');\n\nconst seedAdmin = async () => {\n  const adminExists = await User.findOne({ where: { role: 'ADMIN' } });\n  if (!adminExists) {\n    const hashedPassword = await bcrypt.hash('admin123', 10);\n    await User.create({\n      email: 'admin@greenshop.com',\n      password: hashedPassword,\n      role: 'ADMIN'\n    });\n    console.log('Seed: Admin created');\n  }\n};`}
+                        />
                     </section>
                 </article>
             )}
 
-            {/* --- РЕЖИМ ФАЙЛОВ --- */}
-            {mode === 'files' && (
-                <div className="space-y-6">
-                    <h2 className="text-3xl font-bold mb-8 text-white text-center md:text-left">Материалы для работы</h2>
-                    <FileDownload name="PostgreSQL_Installation_Guide.pdf" size="1.8 MB" url="#" />
-                    <FileDownload name="Sequelize_CheatSheet.pdf" size="950 KB" url="#" />
-                </div>
-            )}
-
             {/* --- РЕЖИМ ПРАКТИКИ --- */}
             {mode === 'practice' && (
-                <div className="space-y-10">
-                    <h2 className="text-3xl font-bold text-white tracking-tight">Практика: Подключение БД к GreenShop</h2>
+                <div className="space-y-8">
+                    <h2 className="text-3xl font-bold mb-4 text-white">Практика: Инициализация бэкенда</h2>
 
-                    <div className="p-8 bg-blue-600/5 border border-blue-500/20 rounded-[2.5rem]">
-                        <div className="space-y-12">
-                            {/* Шаг 1 */}
-                            <div className="flex gap-6 items-start">
-                                <div className="w-12 h-12 rounded-2xl bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-black shadow-lg shadow-blue-600/20">1</div>
-                                <div className="flex-1">
-                                    <h4 className="text-white font-bold mb-3 uppercase tracking-wider text-sm italic">Установка зависимостей</h4>
-                                    <CodeSnippet language="bash" code="npm install sequelize pg pg-hstore" />
+                    <div className="p-8 bg-blue-600/5 border border-blue-500/20 rounded-[2.5rem] space-y-12">
+                        {/* ШАГ 1 */}
+                        <li className="flex items-start gap-4 text-slate-300 list-none">
+                            <div className="w-10 h-10 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-600/20">1</div>
+                            <div className="flex-1">
+                                <p className="font-bold text-white uppercase text-xs tracking-widest mb-1">Шаг 1: Структура и зависимости</p>
+                                <p className="mb-4 text-sm">Создайте все папки из раздела "Структура" и установите библиотеку для работы с окружением:</p>
+                                <CodeSnippet language="bash" code="npm install dotenv" />
+                            </div>
+                        </li>
+
+                        {/* ШАГ 2 */}
+                        <li className="flex items-start gap-4 text-slate-300 list-none">
+                            <div className="w-10 h-10 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-600/20">2</div>
+                            <div className="flex-1">
+                                <p className="font-bold text-white uppercase text-xs tracking-widest mb-1 text-blue-400">Шаг 2: Настройка .env и DB</p>
+                                <p className="text-sm mb-4">Создайте файл <code className="text-blue-300">.env</code> и настройте подключение в <code className="text-blue-300">config/db.js</code>:</p>
+                                <CodeSnippet
+                                    language="javascript"
+                                    code={`require('dotenv').config();\nconst { Sequelize } = require('sequelize');\n\nmodule.exports = new Sequelize(\n  process.env.DB_NAME,\n  process.env.DB_USER,\n  process.env.DB_PASSWORD,\n  { dialect: 'mysql', host: process.env.DB_HOST }\n);`}
+                                />
+                            </div>
+                        </li>
+
+                        {/* ШАГ 3 (ПЛАНИРОВАНИЕ) */}
+                        <li className="flex items-start gap-4 text-slate-300 list-none border-t border-white/5 pt-8">
+                            <div className="w-10 h-10 rounded-full bg-emerald-600 flex-shrink-0 flex items-center justify-center text-white font-bold">3</div>
+                            <div className="flex-1">
+                                <p className="font-bold text-white uppercase text-xs tracking-widest mb-1 text-emerald-400 font-mono">Шаг 3: Проектирование API (GreenShop)</p>
+                                <p className="text-sm mb-6">Исходя из нашей БД, вам нужно подготовить следующие роуты и контроллеры:</p>
+
+                                <div className="space-y-4">
+                                    <div className="p-4 bg-white/[0.03] rounded-xl border border-white/5">
+                                        <h5 className="text-white font-bold text-sm mb-2 italic">Маршруты Пользователей (UserRoutes):</h5>
+                                        <ul className="text-xs text-slate-400 space-y-2">
+                                            <li>• <code className="text-blue-300">POST /api/user/registration</code> → Регистрация клиента</li>
+                                            <li>• <code className="text-blue-300">POST /api/user/login</code> → Вход и получение JWT-токена</li>
+                                            <li>• <code className="text-blue-300">GET /api/user/auth</code> → Проверка авторизации</li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="p-4 bg-white/[0.03] rounded-xl border border-white/5">
+                                        <h5 className="text-white font-bold text-sm mb-2 italic">Маршруты Товаров (ProductRoutes):</h5>
+                                        <ul className="text-xs text-slate-400 space-y-2">
+                                            <li>• <code className="text-blue-300">GET /api/product</code> → Получить список всех растений</li>
+                                            <li>• <code className="text-blue-300">GET /api/product/:id</code> → Получить инфо об одном растении</li>
+                                            <li>• <code className="text-blue-300 font-bold text-red-400/70">POST /api/product (ADMIN ONLY)</code> → Добавить новое растение</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-
-                            {/* Шаг 2 */}
-                            <div className="flex gap-6 items-start">
-                                <div className="w-12 h-12 rounded-2xl bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-black shadow-lg shadow-blue-600/20">2</div>
-                                <div className="flex-1">
-                                    <h4 className="text-white font-bold mb-3 uppercase tracking-wider text-sm italic">Конфигурация (config/db.js)</h4>
-                                    <CodeSnippet language="javascript" code={`const { Sequelize } = require('sequelize');\n\nmodule.exports = new Sequelize('greenshop_db', 'postgres', 'password', {\n    host: 'localhost',\n    dialect: 'postgres',\n    logging: false\n});`} />
-                                </div>
-                            </div>
-
-                            {/* Шаг 3 */}
-                            <div className="flex gap-6 items-start">
-                                <div className="w-12 h-12 rounded-2xl bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-black shadow-lg shadow-blue-600/20">3</div>
-                                <div className="flex-1">
-                                    <h4 className="text-white font-bold mb-3 uppercase tracking-wider text-sm italic text-blue-400">Модель растения (models/Plant.js)</h4>
-                                    <CodeSnippet language="javascript" code={`const { DataTypes } = require('sequelize');\nconst sequelize = require('../config/db');\n\nconst Plant = sequelize.define('Plant', {\n    name: { type: DataTypes.STRING, allowNull: false },\n    price: { type: DataTypes.INTEGER },\n    category: { type: DataTypes.STRING }\n});\n\nmodule.exports = Plant;`} />
-                                </div>
-                            </div>
-
-                            {/* Шаг 4 */}
-                            <div className="flex gap-6 items-start">
-                                <div className="w-12 h-12 rounded-2xl bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-black shadow-lg shadow-blue-600/20">4</div>
-                                <div className="flex-1">
-                                    <h4 className="text-white font-bold mb-3 uppercase tracking-wider text-sm italic">Синхронизация в server.js</h4>
-                                    <CodeSnippet language="javascript" code={`const sequelize = require('./config/db');\n\nconst start = async () => {\n    try {\n        await sequelize.authenticate();\n        await sequelize.sync(); // Создает таблицы\n        app.listen(PORT, () => console.log('DB Connected & Server Started'));\n    } catch (e) { console.log(e) }\n};`} />
-                                </div>
-                            </div>
-                        </div>
-
-                        <InfoPanel title="Задание для команд">
-                            <ul className="text-sm space-y-2">
-                                <li>• Создать пустую базу данных в <strong>pgAdmin 4</strong>.</li>
-                                <li>• Описать модель для главной сущности вашего проекта.</li>
-                                <li>• Через <strong>Postman</strong> отправить POST запрос и убедиться, что данные появились в базе.</li>
-                            </ul>
-                        </InfoPanel>
+                        </li>
                     </div>
+
                 </div>
             )}
         </div>
     );
 };
 
-export default Lesson8;
+export default BackendArchitectureLesson;

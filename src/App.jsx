@@ -26,6 +26,8 @@ const lessons = [
     { id: 4, title: 'SEO и структура' },
     { id: 5, title: 'Дизайн в Figma' },
     { id: 6, title: 'Git' },
+    { id: 7, title: 'БД' },
+
 
 ];
 
