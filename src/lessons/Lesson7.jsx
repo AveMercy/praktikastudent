@@ -148,7 +148,7 @@ const Lesson8JS = ({ mode }) => {
                     <div className="grid gap-4">
                         <FileDownload
                             name="Презентация.pdf"
-                            url="/downloads/pres/less3.pdf"
+                            url="/downloads/pres/less7.pdf"
                         />
                     </div>
                 </div>
