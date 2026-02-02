@@ -3,146 +3,181 @@ import {
     TheoryText,
     InfoPanel,
     CodeSnippet,
+    TheoryImage,
     ExternalLinkCard,
-    TheoryImage
+    FileDownload
 } from '../components/UIComponents';
 
-const BackendArchitectureLesson = ({ mode }) => {
+const LessonDatabaseDesign = ({ mode }) => {
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-700">
             {/* --- РЕЖИМ ТЕОРИИ --- */}
             {mode === 'theory' && (
                 <article>
                     <h2 className="text-4xl font-black mb-8 bg-gradient-to-r from-white to-slate-500 bg-clip-text text-transparent">
-                        Лекция 12: Архитектура Backend-приложения (Node.js + Sequelize)
+                        Лекция 8: Проектирование БД
                     </h2>
 
                     <section className="mb-12">
                         <TheoryText>
-                            Когда проект растет, важно, чтобы каждый файл отвечал за свою задачу (<b>Principle of Single Responsibility</b>). Мы будем использовать структуру, где логика отделена от маршрутов, а настройки — от кода.
+                            Следующим шагом для проекта является создание базы данных (БД). Мы не будем проектировать огромную архитектуру, а создадим <b>минимум 2 таблицы</b>. Этого достаточно, чтобы понять принципы связи данных с проектом.
+                        </TheoryText>
+                        <TheoryText>
+                            На примере магазина <b>GreenShop</b> моя БД будет включать таблицы пользователей и продуктов (растений). В вашем случае это может быть любой товар или услуга.
                         </TheoryText>
                     </section>
 
-                    {/* 1. СТРУКТУРА ПРОЕКТА */}
+                    {/* 1. ТАБЛИЦА USERS */}
                     <section className="mb-12">
-                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">1. Структура папок и файлов</h3>
-                        <div className="bg-[#020617] p-6 rounded-2xl border border-white/5 font-mono text-sm leading-relaxed text-slate-300">
-                            <p>server/</p>
-                            <p>├── <span className="text-blue-400 font-bold">config/</span> # Настройки (БД, Passport и т.д.)</p>
-                            <p>├── <span className="text-blue-400 font-bold">controllers/</span> # Логика обработки запросов (мозг приложения)</p>
-                            <p>├── <span className="text-blue-400 font-bold">middleware/</span> # Промежуточные фильтры (проверка авторизации)</p>
-                            <p>├── <span className="text-blue-400 font-bold">models/</span> # Описание таблиц базы данных (Sequelize модели)</p>
-                            <p>├── <span className="text-blue-400 font-bold">routes/</span> # Маршруты (API Endpoints)</p>
-                            <p>├── <span className="text-blue-400 font-bold">seeders/</span> # Первичное заполнение БД (например, Админ)</p>
-                            <p>├── <span className="text-blue-400 font-bold">uploads/</span> # Физическое хранение картинок растений</p>
-                            <p>├── <span className="text-blue-300">.env</span> # Секретные ключи (не пушим в Git!)</p>
-                            <p>├── <span className="text-blue-300">app.js</span> # Сборка Express-приложения</p>
-                            <p>└── <span className="text-blue-300">index.js</span> # Точка запуска сервера</p>
-                        </div>
-                    </section>
+                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">1. Таблица users (Персонал и Клиенты)</h3>
+                        <TheoryText>
+                            В профессиональной разработке редко создают отдельные таблицы для админов и клиентов. Вместо этого используют одну таблицу с полем <code className="text-blue-300 bg-blue-500/10 px-2 py-0.5 rounded">role</code>.
+                        </TheoryText>
 
-                    {/* 2. НАЗНАЧЕНИЕ СЛОЕВ */}
-                    <section className="mb-12 space-y-8">
-                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">2. Назначение слоев (Слои приложения)</h3>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="p-5 bg-white/5 rounded-2xl border border-white/10">
-                                <h4 className="text-white font-bold mb-2 uppercase text-xs tracking-widest text-blue-400">Routes (Пути)</h4>
-                                <p className="text-sm text-slate-400 leading-relaxed">
-                                    Только направления. Например: <code className="text-blue-300 italic">router.post('/login', userController.login)</code>.
-                                    Роут не знает, как работает логин, он просто направляет запрос дальше.
-                                </p>
-                            </div>
-                            <div className="p-5 bg-white/5 rounded-2xl border border-white/10">
-                                <h4 className="text-white font-bold mb-2 uppercase text-xs tracking-widest text-blue-400">Controllers (Логика)</h4>
-                                <p className="text-sm text-slate-400 leading-relaxed">
-                                    Здесь живет "мозг". Контроллер достает данные из <code className="text-blue-300 italic">req.body</code>, обращается к модели и отправляет ответ в JSON.
-                                </p>
-                            </div>
-                        </div>
-
-                        <InfoPanel title="Почему нельзя всё в одном файле?">
-                            Когда в проекте станет 50 моделей и 200 роутов, один файл будет весить 10 000 строк. В нем невозможно работать командой — вы будете постоянно ловить конфликты в Git.
+                        <InfoPanel title="Зачем нужна роль?">
+                            Так проще реализовать систему входа (Login). Сервер проверяет логин/пароль в одной таблице, а затем смотрит на роль:
+                            <ul className="mt-2 space-y-1 text-slate-400 italic">
+                                <li>— «Ты админ — тебе можно в панель управления»</li>
+                                <li>— «Ты клиент — тебе доступна только корзина»</li>
+                            </ul>
                         </InfoPanel>
                     </section>
 
-                    {/* 3. СИДЕРЫ */}
+                    {/* 2. ТАБЛИЦА PRODUCTS */}
                     <section className="mb-12">
-                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">3. Сиды (Seeders) — Создаем Админа правильно</h3>
+                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">2. Таблица products (Товары)</h3>
                         <TheoryText>
-                            <b>Seeder</b> — это скрипт, который "сеет" начальные данные в пустую базу. Мы будем использовать его, чтобы создать первого администратора с зашифрованным паролем.
+                            Здесь хранится всё, что мы продаем. Для каждого товара (растения) нам понадобятся поля: название, цена, описание и ссылка на изображение.
                         </TheoryText>
+                    </section>
+
+                    {/* 3. НАСТРОЙКИ СВЯЗИ */}
+                    <section className="mb-12">
+                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">Как мы будем работать с БД</h3>
+                        <TheoryText>
+                            Библиотека <b>Sequelize</b> на бэкенде «свяжется» с этими таблицами. Для этого нам понадобится файл конфигурации настроек <code className="text-blue-300">.env</code>.
+                        </TheoryText>
+
                         <CodeSnippet
-                            language="javascript"
-                            code={`const bcrypt = require('bcrypt');\nconst User = require('../models/User');\n\nconst seedAdmin = async () => {\n  const adminExists = await User.findOne({ where: { role: 'ADMIN' } });\n  if (!adminExists) {\n    const hashedPassword = await bcrypt.hash('admin123', 10);\n    await User.create({\n      email: 'admin@greenshop.com',\n      password: hashedPassword,\n      role: 'ADMIN'\n    });\n    console.log('Seed: Admin created');\n  }\n};`}
+                            title=".env конфигурация"
+                            language="bash"
+                            code={`# Ссылка на БД: mysql://логин:пароль@хост:порт/имя_бд\nDATABASE_URL="mysql://root@127.0.1.29:3306/greenshop_db"\n`}
                         />
                     </section>
                 </article>
             )}
 
+            {/* --- РЕЖИМ ФАЙЛОВ --- */}
+            {mode === 'files' && (
+                <div className="space-y-6">
+                    <h2 className="text-3xl font-bold mb-8 text-white">Инструменты</h2>
+                    <div className="grid gap-4">
+                        <ExternalLinkCard
+                            name="phpMyAdmin"
+                            description="Локальный веб-интерфейс для управления базой данных MySQL"
+                            url="http://localhost/phpmyadmin"
+                        />
+                    </div>
+                </div>
+            )}
+
             {/* --- РЕЖИМ ПРАКТИКИ --- */}
             {mode === 'practice' && (
                 <div className="space-y-8">
-                    <h2 className="text-3xl font-bold mb-4 text-white">Практика: Инициализация бэкенда</h2>
+                    <h2 className="text-3xl font-bold mb-4 text-white">Практика: Создание БД в phpMyAdmin</h2>
+                    <div className="p-8 bg-blue-600/5 border border-blue-500/20 rounded-[2.5rem]">
 
-                    <div className="p-8 bg-blue-600/5 border border-blue-500/20 rounded-[2.5rem] space-y-12">
-                        {/* ШАГ 1 */}
-                        <li className="flex items-start gap-4 text-slate-300 list-none">
-                            <div className="w-10 h-10 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-600/20">1</div>
-                            <div className="flex-1">
-                                <p className="font-bold text-white uppercase text-xs tracking-widest mb-1">Шаг 1: Структура и зависимости</p>
-                                <p className="mb-4 text-sm">Создайте все папки из раздела "Структура" и установите библиотеку для работы с окружением:</p>
-                                <CodeSnippet language="bash" code="npm install dotenv" />
-                            </div>
-                        </li>
-
-                        {/* ШАГ 2 */}
-                        <li className="flex items-start gap-4 text-slate-300 list-none">
-                            <div className="w-10 h-10 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-600/20">2</div>
-                            <div className="flex-1">
-                                <p className="font-bold text-white uppercase text-xs tracking-widest mb-1 text-blue-400">Шаг 2: Настройка .env и DB</p>
-                                <p className="text-sm mb-4">Создайте файл <code className="text-blue-300">.env</code> и настройте подключение в <code className="text-blue-300">config/db.js</code>:</p>
-                                <CodeSnippet
-                                    language="javascript"
-                                    code={`require('dotenv').config();\nconst { Sequelize } = require('sequelize');\n\nmodule.exports = new Sequelize(\n  process.env.DB_NAME,\n  process.env.DB_USER,\n  process.env.DB_PASSWORD,\n  { dialect: 'mysql', host: process.env.DB_HOST }\n);`}
-                                />
-                            </div>
-                        </li>
-
-                        {/* ШАГ 3 (ПЛАНИРОВАНИЕ) */}
-                        <li className="flex items-start gap-4 text-slate-300 list-none border-t border-white/5 pt-8">
-                            <div className="w-10 h-10 rounded-full bg-emerald-600 flex-shrink-0 flex items-center justify-center text-white font-bold">3</div>
-                            <div className="flex-1">
-                                <p className="font-bold text-white uppercase text-xs tracking-widest mb-1 text-emerald-400 font-mono">Шаг 3: Проектирование API (GreenShop)</p>
-                                <p className="text-sm mb-6">Исходя из нашей БД, вам нужно подготовить следующие роуты и контроллеры:</p>
-
-                                <div className="space-y-4">
-                                    <div className="p-4 bg-white/[0.03] rounded-xl border border-white/5">
-                                        <h5 className="text-white font-bold text-sm mb-2 italic">Маршруты Пользователей (UserRoutes):</h5>
-                                        <ul className="text-xs text-slate-400 space-y-2">
-                                            <li>• <code className="text-blue-300">POST /api/user/registration</code> → Регистрация клиента</li>
-                                            <li>• <code className="text-blue-300">POST /api/user/login</code> → Вход и получение JWT-токена</li>
-                                            <li>• <code className="text-blue-300">GET /api/user/auth</code> → Проверка авторизации</li>
-                                        </ul>
-                                    </div>
-
-                                    <div className="p-4 bg-white/[0.03] rounded-xl border border-white/5">
-                                        <h5 className="text-white font-bold text-sm mb-2 italic">Маршруты Товаров (ProductRoutes):</h5>
-                                        <ul className="text-xs text-slate-400 space-y-2">
-                                            <li>• <code className="text-blue-300">GET /api/product</code> → Получить список всех растений</li>
-                                            <li>• <code className="text-blue-300">GET /api/product/:id</code> → Получить инфо об одном растении</li>
-                                            <li>• <code className="text-blue-300 font-bold text-red-400/70">POST /api/product (ADMIN ONLY)</code> → Добавить новое растение</li>
-                                        </ul>
-                                    </div>
+                        <ul className="space-y-12">
+                            {/* ШАГ 1 */}
+                            <li className="flex items-start gap-4 text-slate-300">
+                                <div className="w-10 h-10 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-600/20">
+                                    1
                                 </div>
-                            </div>
-                        </li>
-                    </div>
+                                <div>
+                                    <p className="font-bold text-white uppercase text-xs tracking-widest mb-1">Шаг 1: Подготовка</p>
+                                    Запустите <b>OSPanel</b> и откройте <b>phpMyAdmin</b> через меню или по адресу в браузере.
+                                </div>
+                            </li>
 
+                            {/* ШАГ 2 */}
+                            <li className="flex items-start gap-4 text-slate-300">
+                                <div className="w-10 h-10 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-600/20">
+                                    2
+                                </div>
+                                <div className="flex-1">
+                                    <p className="font-bold text-white uppercase text-xs tracking-widest mb-1 text-blue-400">Шаг 2: Создание структуры</p>
+                                    <ul className="list-disc ml-5 mt-2 space-y-2 text-sm text-slate-400">
+                                        <li>Создайте БД с именем вашего проекта (например: <code className="text-blue-300">greenshop_db</code>).</li>
+                                        <li>Создайте таблицы <b>users</b> и <b>products</b> (минимум по 4-5 столбцов в каждой).</li>
+                                        <li>Добавьте вручную 5 записей в таблицу с товарами через вкладку «Вставить».</li>
+                                    </ul>
+
+                                    <div className="mt-8 space-y-6">
+                                        <div>
+                                            <h4 className="text-white font-bold mb-2">Пример таблицы пользователей:</h4>
+                                            <p className="text-sm mb-4">
+                                                Для <code className="text-blue-400">id</code> обязательно указываем автозаполнение <b className="text-blue-400">(A_I)</b> и индекс <b className="text-blue-400">PRIMARY</b>.
+                                                Для остальных столбцов указываем тип и длину. Для роли указываем дефолтное значение — <span className="italic text-slate-400 text-xs">клиент</span>.
+                                            </p>
+                                            <TheoryImage src="/img/less7/1.png" alt="Структура таблицы users" />
+                                        </div>
+
+                                        <div>
+                                            <h4 className="text-white font-bold mb-2">Пример таблицы товаров:</h4>
+                                            <p className="text-sm mb-4">
+                                                Здесь тоже указываем везде правильные типы (например, VARCHAR для строк, INT для чисел) и длину. Для цены лучше использовать DECIMAL или INT.
+                                            </p>
+                                            <TheoryImage src="/img/less7/2.png" alt="Структура таблицы products" />
+                                        </div>
+
+                                        <div className="p-6 bg-white/[0.02] border border-white/5 rounded-2xl">
+                                            <h4 className="text-white font-bold mb-2">Заполнение данными:</h4>
+                                            <p className="text-sm mb-4">
+                                                Заполняем таблицу записями (пока таблицу пользователей не трогаем).
+                                                <b> Про изображения:</b> мы позже будем хранить их внутри проекта, поэтому в базе данных в поле картинки можете указывать путь <code className="text-blue-300">/uploads/название.png</code>, либо пока оставить пустым.
+                                            </p>
+                                            <TheoryImage src="/img/less7/3.png" alt="Заполнение таблицы записями" />
+                                        </div>
+                                    </div>
+
+                                    <InfoPanel title="Важно: Про пароли">
+                                        Мы никогда не храним пароли в чистом виде (например, "12345"). Мы храним <b>«хэш»</b>, который генерирует библиотека <code className="text-blue-300">bcrypt</code> на бэкенде.
+                                        <br/><br/>
+                                        <b>Записи для таблицы пользователей пока не создавайте вручную!</b> Мы сделаем это позже через код.
+                                    </InfoPanel>
+                                </div>
+                            </li>
+
+                            {/* ШАГ 3 */}
+                            <li className="flex items-start gap-4 text-slate-300">
+                                <div className="w-10 h-10 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-600/20">
+                                    3
+                                </div>
+                                <div className="flex-1">
+                                    <p className="font-bold text-white uppercase text-xs tracking-widest mb-1">Шаг 3: Экспорт</p>
+                                    <p className="mb-4">
+                                        Нажмите кнопку <b>«Экспорт»</b> в верхнем меню phpMyAdmin и сохраните <code className="text-blue-300">.sql</code> файл к себе на компьютер.
+                                    </p>
+                                    <TheoryImage src="/img/less7/4.png" alt="Процесс экспорта БД" />
+
+                                    <p className="mt-6 text-sm bg-white/5 p-4 rounded-xl italic text-slate-400 border-l-2 border-blue-500/30">
+                                        <b>Примечание:</b> Экспорт удобен, если вы работаете за разными устройствами — вы всегда сможете импортировать готовую структуру в один клик, а не переделывать её с нуля.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div className="mt-10 p-6 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center gap-4">
+                            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                            <p className="text-emerald-400 text-sm font-medium">
+                                Экспортированный .sql файл отправить на проверку или показать созданную БД на паре.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
     );
 };
 
-export default BackendArchitectureLesson;
+export default LessonDatabaseDesign;

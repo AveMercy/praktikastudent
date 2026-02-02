@@ -64,7 +64,7 @@ export const TheoryImage = ({ src, alt = "Иллюстрация" }) => {
     );
 };
 
-// 3. Блок кода с подсветкой и копированием
+// 3. Блок кода с подсветкой в стиле WebStorm
 export const CodeSnippet = ({ code, language = 'javascript' }) => {
     const [copied, setCopied] = useState(false);
 
@@ -72,6 +72,22 @@ export const CodeSnippet = ({ code, language = 'javascript' }) => {
         navigator.clipboard.writeText(code);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
+    };
+
+    // Кастомная палитра WebStorm (Darcula)
+    const webStormColors = {
+        'keyword': { color: '#f19347' },       // const, let, function, if - Оранжевый
+        'string': { color: '#58ca79' },        // "Текст" - Зеленый
+        'number': { color: '#60a8dd' },        // 123 - Голубой
+        'function': { color: '#5ba8ff' },      // названия функций - Желтый
+        'comment': { color: '#808080', fontStyle: 'italic' }, // // Комменты - Серый
+        'attr-name': { color: '#A9B7C6' },     // аргументы
+        'operator': { color: '#A9B7C6' },      // + - =
+        'boolean': { color: '#e48d45' },       // true/false - Оранжевый
+        'class-name': { color: '#c76bfa' },
+        'property': { color: '#ba66e8' },      // name, age (в объектах) - Фиолетовый/Светлый
+        'variable': { color: '#A9B7C6' },      // обычный текст переменных
+
     };
 
     return (
@@ -87,8 +103,15 @@ export const CodeSnippet = ({ code, language = 'javascript' }) => {
             <div className="rounded-2xl overflow-hidden border border-white/5 shadow-2xl text-sm font-mono">
                 <SyntaxHighlighter
                     language={language}
-                    style={atomDark}
-                    customStyle={{ margin: 0, padding: '1.5rem', background: '#020617' }}
+                    style={{
+                        ...atomDark,
+                        ...webStormColors // Накладываем наши цвета поверх стандартной темной темы
+                    }}
+                    customStyle={{
+                        margin: 0,
+                        padding: '1.5rem',
+                        background: '#080d22' // Фон как в новом WebStorm
+                    }}
                 >
                     {code}
                 </SyntaxHighlighter>

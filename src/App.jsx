@@ -10,6 +10,11 @@ import Lesson5 from './lessons/Lesson5.jsx';
 import Lesson6 from './lessons/Lesson6.jsx';
 import Lesson7 from './lessons/Lesson7.jsx';
 import Lesson8 from './lessons/Lesson8.jsx';
+import Lesson9 from './lessons/Lesson9.jsx';
+import Lesson10 from './lessons/Lesson10.jsx';
+
+
+
 
 // Импортируем твой новый компонент Home
 import Home from './components/Home';
@@ -26,7 +31,9 @@ const lessons = [
     { id: 4, title: 'SEO и структура' },
     { id: 5, title: 'Дизайн в Figma' },
     { id: 6, title: 'Git' },
-    { id: 7, title: 'БД' },
+    { id: 7, title: 'JS' },
+    { id: 8, title: 'БД' },
+
 
 
 ];
@@ -55,6 +62,10 @@ const ContentWrapper = () => {
                 {activeLesson === 6 && <Lesson6 mode={mode} />}
                 {activeLesson === 7 && <Lesson7 mode={mode} />}
                 {activeLesson === 8 && <Lesson8 mode={mode} />}
+                {activeLesson === 9 && <Lesson9 mode={mode} />}
+                {activeLesson === 10 && <Lesson10 mode={mode} />}
+
+
             </div>
         </>
     );
