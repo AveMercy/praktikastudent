@@ -33,6 +33,8 @@ const lessons = [
     { id: 6, title: 'Git' },
     { id: 7, title: 'JS' },
     { id: 8, title: 'БД' },
+    { id: 9, title: 'Создание проекта' },
+
 
 
 

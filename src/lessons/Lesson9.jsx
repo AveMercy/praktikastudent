@@ -3,25 +3,19 @@ import {
     TheoryText,
     InfoPanel,
     CodeSnippet,
-    ExternalLinkCard,
-    TheoryImage
+    FileDownload,
+    ExternalLinkCard, TheoryImage
 } from '../components/UIComponents';
 
-const BackendArchitectureLesson = ({ mode }) => {
+const Lesson9 = ({ mode }) => {
     return (
         <div className="animate-in fade-in slide-in-from-right-4 duration-700">
             {/* --- РЕЖИМ ТЕОРИИ --- */}
             {mode === 'theory' && (
                 <article>
                     <h2 className="text-4xl font-black mb-8 bg-gradient-to-r from-white to-slate-500 bg-clip-text text-transparent">
-                        Лекция 12: Архитектура Backend-приложения (Node.js + Sequelize)
+                        Лекция 9: Архитектура Backend-приложения
                     </h2>
-
-                    <section className="mb-12">
-                        <TheoryText>
-                            Когда проект растет, важно, чтобы каждый файл отвечал за свою задачу (<b>Principle of Single Responsibility</b>). Мы будем использовать структуру, где логика отделена от маршрутов, а настройки — от кода.
-                        </TheoryText>
-                    </section>
 
                     {/* 1. СТРУКТУРА ПРОЕКТА */}
                     <section className="mb-12">
@@ -66,83 +60,130 @@ const BackendArchitectureLesson = ({ mode }) => {
                         </InfoPanel>
                     </section>
 
-                    {/* 3. СИДЕРЫ */}
-                    <section className="mb-12">
-                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">3. Сиды (Seeders) — Создаем Админа правильно</h3>
-                        <TheoryText>
-                            <b>Seeder</b> — это скрипт, который "сеет" начальные данные в пустую базу. Мы будем использовать его, чтобы создать первого администратора с зашифрованным паролем.
-                        </TheoryText>
-                        <CodeSnippet
-                            language="javascript"
-                            code={`const bcrypt = require('bcrypt');\nconst User = require('../models/User');\n\nconst seedAdmin = async () => {\n  const adminExists = await User.findOne({ where: { role: 'ADMIN' } });\n  if (!adminExists) {\n    const hashedPassword = await bcrypt.hash('admin123', 10);\n    await User.create({\n      email: 'admin@greenshop.com',\n      password: hashedPassword,\n      role: 'ADMIN'\n    });\n    console.log('Seed: Admin created');\n  }\n};`}
-                        />
-                    </section>
                 </article>
             )}
 
+
             {/* --- РЕЖИМ ПРАКТИКИ --- */}
             {mode === 'practice' && (
-                <div className="space-y-8">
-                    <h2 className="text-3xl font-bold mb-4 text-white">Практика: Инициализация бэкенда</h2>
+                <div className="space-y-12">
+                    <h2 className="text-3xl font-bold text-white mb-8">Практика: Создание проекта и установка зависимостей</h2>
 
-                    <div className="p-8 bg-blue-600/5 border border-blue-500/20 rounded-[2.5rem] space-y-12">
-                        {/* ШАГ 1 */}
-                        <li className="flex items-start gap-4 text-slate-300 list-none">
-                            <div className="w-10 h-10 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-600/20">1</div>
-                            <div className="flex-1">
-                                <p className="font-bold text-white uppercase text-xs tracking-widest mb-1">Шаг 1: Структура и зависимости</p>
-                                <p className="mb-4 text-sm">Создайте все папки из раздела "Структура" и установите библиотеку для работы с окружением:</p>
-                                <CodeSnippet language="bash" code="npm install dotenv" />
+                    {/* ШАГ 1 */}
+                    <section className="relative pl-12 border-l-2 border-blue-500/30">
+                        <div className="absolute -left-4 top-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center font-bold text-white shadow-lg shadow-blue-600/40">1</div>
+                        <h4 className="text-xl font-bold text-white mb-4 italic">Подготовка в IntelliJ IDEA</h4>
+                        <TheoryText>
+                            Запустите IntelliJ IDEA и создайте новый пустой проект. Назовите его <code className="text-blue-400">vashe-nazvanie-backend</code>. Мы начинаем с серверной части, поэтому весь код будет жить в этой папке.
+                        </TheoryText>
+                        <TheoryImage src="/img/less9/1.png" />
+
+                    </section>
+
+                    {/* ШАГ 2 */}
+                    <section className="relative pl-12 border-l-2 border-blue-500/30">
+                        <div className="absolute -left-4 top-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center font-bold text-white shadow-lg shadow-blue-600/40">2</div>
+                        <h4 className="text-xl font-bold text-white mb-4 italic">Работа с Git (Необязательный шаг)</h4>
+                        <TheoryText>
+                            Чтобы иметь доступ к коду из дома или с другого ПК, используйте GitHub.
+                        </TheoryText>
+                        <div className="space-y-4 mb-6">
+                            <div className="p-4 bg-white/5 rounded-xl border border-white/10 text-sm">
+                                <span className="text-blue-400 font-bold tracking-tight">Как зашэрить:</span> В верхней
+                                панели найдите <b>Git (или Version Control)</b> → <b>GitHub</b> → <b>Share Project on
+                                GitHub</b>.
+                                Вам, скорее всего, предложат связать аккаунт на гитхаб (если работаете не со своего
+                                устройства, то рекомендую создать чистый аккаунт, чтобы избежать потери данных).
+                                <TheoryImage src="/img/less9/2.png"/>
+                                <span className="text-blue-400 font-bold tracking-tight"></span> Вы также можете
+                                привязать несколько аккаунтов и делиться проектом только на тот аккаунт, который нужен.
+                                Перейдите в настройки, нажав 3 полоски слева сверху, найдите пункт Version Control -
+                                GitHub.
+                                <TheoryImage src="/img/less9/3.png"/>
+
                             </div>
-                        </li>
-
-                        {/* ШАГ 2 */}
-                        <li className="flex items-start gap-4 text-slate-300 list-none">
-                            <div className="w-10 h-10 rounded-full bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-600/20">2</div>
-                            <div className="flex-1">
-                                <p className="font-bold text-white uppercase text-xs tracking-widest mb-1 text-blue-400">Шаг 2: Настройка .env и DB</p>
-                                <p className="text-sm mb-4">Создайте файл <code className="text-blue-300">.env</code> и настройте подключение в <code className="text-blue-300">config/db.js</code>:</p>
-                                <CodeSnippet
-                                    language="javascript"
-                                    code={`require('dotenv').config();\nconst { Sequelize } = require('sequelize');\n\nmodule.exports = new Sequelize(\n  process.env.DB_NAME,\n  process.env.DB_USER,\n  process.env.DB_PASSWORD,\n  { dialect: 'mysql', host: process.env.DB_HOST }\n);`}
-                                />
+                            <div className="p-4 bg-white/5 rounded-xl border border-white/10 text-sm">
+                                <span className="text-blue-400 font-bold tracking-tight">Как открыть на другом устройстве:</span> Выбираем панель сверху с проектами. Нажимаем clone repository. Выбираем аккаунт с которого хотим скопироать репозиторий и название репоизатория на гите.
+                                <TheoryImage src="/img/less9/4.png"/>
                             </div>
-                        </li>
+                            <div className="p-4 bg-white/5 rounded-xl border border-white/10 text-sm">
+                                <span className="text-blue-400 font-bold">Как сохранять прогресс:</span> После каждой пары делайте
+                                коммиты. Нажмите <kbd className="bg-slate-700 px-1 rounded">Ctrl+K</kbd> (либо в панели слева, линия с кругом), напишите
+                                описание изменений и выберите <b>Commit and Push</b>.
 
-                        {/* ШАГ 3 (ПЛАНИРОВАНИЕ) */}
-                        <li className="flex items-start gap-4 text-slate-300 list-none border-t border-white/5 pt-8">
-                            <div className="w-10 h-10 rounded-full bg-emerald-600 flex-shrink-0 flex items-center justify-center text-white font-bold">3</div>
-                            <div className="flex-1">
-                                <p className="font-bold text-white uppercase text-xs tracking-widest mb-1 text-emerald-400 font-mono">Шаг 3: Проектирование API (GreenShop)</p>
-                                <p className="text-sm mb-6">Исходя из нашей БД, вам нужно подготовить следующие роуты и контроллеры:</p>
-
-                                <div className="space-y-4">
-                                    <div className="p-4 bg-white/[0.03] rounded-xl border border-white/5">
-                                        <h5 className="text-white font-bold text-sm mb-2 italic">Маршруты Пользователей (UserRoutes):</h5>
-                                        <ul className="text-xs text-slate-400 space-y-2">
-                                            <li>• <code className="text-blue-300">POST /api/user/registration</code> → Регистрация клиента</li>
-                                            <li>• <code className="text-blue-300">POST /api/user/login</code> → Вход и получение JWT-токена</li>
-                                            <li>• <code className="text-blue-300">GET /api/user/auth</code> → Проверка авторизации</li>
-                                        </ul>
-                                    </div>
-
-                                    <div className="p-4 bg-white/[0.03] rounded-xl border border-white/5">
-                                        <h5 className="text-white font-bold text-sm mb-2 italic">Маршруты Товаров (ProductRoutes):</h5>
-                                        <ul className="text-xs text-slate-400 space-y-2">
-                                            <li>• <code className="text-blue-300">GET /api/product</code> → Получить список всех растений</li>
-                                            <li>• <code className="text-blue-300">GET /api/product/:id</code> → Получить инфо об одном растении</li>
-                                            <li>• <code className="text-blue-300 font-bold text-red-400/70">POST /api/product (ADMIN ONLY)</code> → Добавить новое растение</li>
-                                        </ul>
-                                    </div>
-                                </div>
                             </div>
-                        </li>
-                    </div>
+                        </div>
+                    </section>
 
+                    {/* ШАГ 3 */}
+                    <section className="relative pl-12 border-l-2 border-blue-500/30">
+                        <div
+                            className="absolute -left-4 top-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center font-bold text-white shadow-lg shadow-blue-600/40">3
+                        </div>
+                        <h4 className="text-xl font-bold text-white mb-4 italic">Настройка окружения</h4>
+                        <TheoryText>
+                            Откройте терминал в IDEA снизу слева(<kbd className="bg-slate-700 px-1 rounded text-xs">Alt + F12</kbd>)
+                            и инициализируйте проект, затем установите зависимости:
+                        </TheoryText>
+
+                        <CodeSnippet language="bash" code="npm init -y" />
+                        <CodeSnippet language="bash" code="npm install express sequelize mysql2 dotenv cors bcryptjs jsonwebtoken multer nodemon" />
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                            <ul className="text-xs text-slate-400 space-y-2">
+                                <li>• <b className="text-blue-300">express:</b> Фреймворк для создания сервера.</li>
+                                <li>• <b className="text-blue-300">sequelize / mysql2:</b> Работа с базой данных.</li>
+                                <li>• <b className="text-blue-300">dotenv:</b> Работа с секретными ключами в .env.</li>
+                                <li>• <b className="text-blue-300">cors:</b> Разрешение запросов с другого адреса (фронтенда).</li>
+                            </ul>
+                            <ul className="text-xs text-slate-400 space-y-2">
+                                <li>• <b className="text-blue-300">bcryptjs:</b> Шифрование паролей.</li>
+                                <li>• <b className="text-blue-300">jsonwebtoken:</b> Создание токенов авторизации.</li>
+                                <li>• <b className="text-blue-300">multer:</b> Загрузка картинок на сервер.</li>
+                                <li>• <b className="text-blue-300">nodemon:</b> Авто-перезагрузка сервера при изменениях.</li>
+                            </ul>
+                        </div>
+
+                        <InfoPanel title="Важное замечание: Клонирование">
+                            Если вы скачали проект с GitHub (Clone) на другом компьютере, папка <code className="text-red-400">node_modules</code> будет отсутствовать. Вам <b>всегда</b> нужно сначала прописать команду для установки зависимостей, указанных в package.json:
+                            <CodeSnippet language="bash" code="npm install" />
+                        </InfoPanel>
+                    </section>
+
+                    {/* ШАГ 4 */}
+                    <section className="relative pl-12 border-l-2 border-emerald-500/30 pb-12">
+                        <div className="absolute -left-4 top-0 w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center font-bold text-white shadow-lg shadow-emerald-600/40">4</div>
+                        <h4 className="text-xl font-bold text-white mb-4 italic">Создание структуры папок</h4>
+                        <TheoryText>
+                            Внутри корневой папки создайте все директории, указанные в теории лекции, либо со скришнота. (Для вашего проекта может отличаться).
+                            Итоговая структура должна быть пока что примерно такой.  В зависимости от того, сколько и каких у вас таблиц в БД.
+                        </TheoryText>
+                        <TheoryImage src="/img/less9/6.png"/>
+
+                        <ul className="space-y-4 text-sm text-slate-300">
+                            <li className="flex items-start gap-3">
+                                <div className="mt-1 w-2 h-2 rounded-full bg-blue-500 shrink-0" />
+                                <span><b>В папке models:</b> создайте соотвествующие файлы <code className="text-blue-400">Product.js</code> и <code className="text-blue-400">User.js</code>. (Если у вас только 2 таблицы в БД) </span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <div className="mt-1 w-2 h-2 rounded-full bg-blue-500 shrink-0" />
+                                <span><b>В папке controllers:</b> здесь мы будем писать логику добавления и удаления продуктов (в моем случае растений).</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <div className="mt-1 w-2 h-2 rounded-full bg-blue-500 shrink-0" />
+                                <span><b>В папке routes:</b> пропишем пути, по которым фронтенд будет стучаться к нам за данными.</span>
+                            </li>
+                        </ul>
+                        <div className="mt-8 p-6 bg-emerald-500/5 border border-emerald-500/20 rounded-2xl">
+                            <p className="text-emerald-400 font-medium flex items-center gap-2">
+                                <span className="text-xl"></span> Результат: Пустой каркас проекта с установленными библиотеками. Сами файлы (.js) пока можно оставить пустыми.
+                            </p>
+                        </div>
+                    </section>
                 </div>
             )}
         </div>
     );
 };
 
-export default BackendArchitectureLesson;
+export default Lesson9;
