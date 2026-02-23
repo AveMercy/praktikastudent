@@ -3,7 +3,7 @@ import {
     TheoryText,
     InfoPanel,
     CodeSnippet,
-    TheoryImage, ExternalLinkCard
+    TheoryImage, ExternalLinkCard, FileDownload
 } from '../components/UIComponents';
 
 const Lesson10BackendFull = ({ mode }) => {
@@ -159,7 +159,18 @@ const Lesson10BackendFull = ({ mode }) => {
                     </section>
                 </article>
             )}
-
+            {/* --- РЕЖИМ ФАЙЛОВ --- */}
+            {mode === 'files' && (
+                <div className="space-y-6">
+                    <h2 className="text-3xl font-bold mb-8 text-white">Материалы к лекции</h2>
+                    <div className="grid gap-4">
+                        <FileDownload
+                            name="Презентация.pdf"
+                            url="/downloads/pres/less11.pdf"
+                        />
+                    </div>
+                </div>
+            )}
             {/* --- РЕЖИМ ПРАКТИКИ --- */}
             {mode === 'practice' && (
                 <div className="space-y-12 animate-in fade-in slide-in-from-right-4 duration-700">
