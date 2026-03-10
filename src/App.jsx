@@ -13,6 +13,9 @@ import Lesson8 from './lessons/Lesson8.jsx';
 import Lesson9 from './lessons/Lesson9.jsx';
 import Lesson10 from './lessons/Lesson10.jsx';
 import Lesson11 from './lessons/Lesson11.jsx';
+import Lesson12 from './lessons/Lesson12.jsx';
+import Lesson13 from './lessons/Lesson13.jsx';
+import Lesson14 from './lessons/Lesson14.jsx';
 
 
 
@@ -37,6 +40,10 @@ const lessons = [
     { id: 9, title: 'Создание проекта' },
     { id: 10, title: 'Backend' },
     { id: 11, title: 'Тестирование в Postman' },
+    { id: 12, title: 'Фронтенд: Часть 1' },
+    { id: 13, title: 'Фронтенд: Часть 2' },
+    { id: 14, title: 'Фронтенд: Часть 3' },
+
 
 
 
@@ -70,6 +77,10 @@ const ContentWrapper = () => {
                 {activeLesson === 9 && <Lesson9 mode={mode} />}
                 {activeLesson === 10 && <Lesson10 mode={mode} />}
                 {activeLesson === 11 && <Lesson11 mode={mode} />}
+                {activeLesson === 12 && <Lesson12 mode={mode} />}
+                {activeLesson === 13 && <Lesson13 mode={mode} />}
+                {activeLesson === 14 && <Lesson14 mode={mode} />}
+
 
 
             </div>
