@@ -252,11 +252,6 @@ const Lesson10BackendFull = ({ mode }) => {
 import Navbar from './components/layout/Navbar'; // Шапка сайта
 import Footer from './components/layout/Footer'; // Подвал сайта
 import Home from './pages/Home'; // Главная страница
-import Shop from './pages/Shop'; // Страница магазина со всеми товарами
-import ProductPage from './pages/ProductPage'; // Страница одного конкретного товара
-import Login from './pages/Login'; // Страница входа
-import AdminLayout from './pages/admin/AdminLayout'; // Общая оболочка для админ-панели
-import ProtectedRoute from './components/utils/ProtectedRoute'; // Компонент-проверка прав доступа
 
 function App() {
   return (
@@ -265,32 +260,12 @@ function App() {
       <div className="flex flex-col min-h-screen">
         {/* Navbar и Footer находятся ВНЕ Routes, поэтому они видны на каждой странице */}
         <Navbar />
-        
+
         <main className="flex-grow">
           <Routes>
-            {/* path="/" — это главная страница (корень сайта) */}
-            <Route path="/" element={<Home />} />
-            
-            {/* path="/shop" — страница каталога */}
-            <Route path="/shop" element={<Shop />} />
-            
-            {/* :id — это динамический параметр. Сюда попадет ID товара из ссылки */}
-            <Route path="/product/:id" element={<ProductPage />} />
-            
-            <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Home />} />
+                {/* Здесь будут страницы, которые мы разработаем позже */}
 
-            {/* ЗАЩИЩЕННАЯ АДМИНКА */}
-            {/* path="/admin/*" — звездочка означает, что все вложенные пути (напр. /admin/add) 
-                будут обрабатываться внутри AdminLayout */}
-            <Route
-              path="/admin/*"
-              element={
-                /* ProtectedRoute проверяет: залогинен ли юзер и является ли он админом */
-                <ProtectedRoute adminOnly={true}>
-                  <AdminLayout />
-                </ProtectedRoute>
-              }
-            />
           </Routes>
         </main>
 

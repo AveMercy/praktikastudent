@@ -246,7 +246,7 @@ const Lesson10BackendFull = ({ mode }) => {
                             Мы будем использовать <b>Vite</b> — самый быстрый сборщик на данный момент. Введите команду в терминале корня вашего проекта:
                         </TheoryText>
 
-                        <CodeSnippet code={`npm create vite@latest client -- --template react-swc`} />
+                        <CodeSnippet code={`npm create vite@^7 client -- --template react-swc`} />
 
                         <div className="p-6 bg-[#020617] rounded-2xl border border-white/5 my-6">
                             <p className="text-sm text-slate-300 mb-4 font-bold">После ввода команды следуйте инструкциям в терминале:</p>
@@ -257,7 +257,7 @@ const Lesson10BackendFull = ({ mode }) => {
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
-                                    Выберите вариант: <b className="text-white">JavaScript + SWC</b>.
+                                    Выберите вариант: <b className="text-white">JavaScript + SWC</b>
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
@@ -297,7 +297,7 @@ const Lesson10BackendFull = ({ mode }) => {
 
                             <div>
                                 <p className="text-xs text-slate-500 mb-2 uppercase tracking-wider font-bold italic">Шаг 2.4: Установка Tailwind CSS</p>
-                                <CodeSnippet code={`npm install -D @tailwindcss/vite`} />
+                                <CodeSnippet code={`npm install @tailwindcss/vite`} />
                             </div>
                         </div>
                     </section>
@@ -324,7 +324,7 @@ const Lesson10BackendFull = ({ mode }) => {
                                     перенаправлялись на сервер Express (порт 5000). Это избавит нас от ошибок CORS.
                                 </InfoPanel>
                                 <CodeSnippet language="javascript"
-                                             code={`import { defineConfig } from 'vite'\nimport react from '@vitejs/plugin-react-swc'\nimport tailwindcss from '@tailwindcss/vite'\n\nexport default defineConfig({\n  plugins: [\n    tailwindcss(), // Tailwind должен быть ПЕРЕД react() или ПЕРВЫМ в списке\n    react(),\n  ],\n  server: {\n    port: 5173,\n    proxy: {\n      '/api': 'http://localhost:5000',\n      '/uploads': 'http://localhost:5000'\n    }\n  }\n})`}/>
+                                             code={`import { defineConfig } from 'vite'\nimport react from '@vitejs/plugin-react-swc'\nimport tailwindcss from '@tailwindcss'\n\nexport default defineConfig({\n  plugins: [\n    tailwindcss(), // Tailwind должен быть ПЕРЕД react() или ПЕРВЫМ в списке\n    react(),\n  ],\n  server: {\n    port: 5173,\n    proxy: {\n      '/api': 'http://localhost:5000',\n      '/uploads': 'http://localhost:5000'\n    }\n  }\n})`}/>
                             </div>
 
                             <div>
@@ -344,6 +344,7 @@ const Lesson10BackendFull = ({ mode }) => {
 
                     {/* ШАГ 4: ИТОГ */}
                     <section className="p-8 bg-emerald-500/5 border border-emerald-500/20 rounded-3xl">
+
 
                         <p className="text-sm text-slate-300 max-w-2xl mx-auto">
                             Теперь у вас есть готовый "скелет" проекта. Мы установили все нужные библиотеки, настроили
