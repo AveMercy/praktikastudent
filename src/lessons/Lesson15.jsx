@@ -220,9 +220,9 @@ const Lesson10BackendFull = ({ mode }) => {
             {mode === 'practice' && (
                 <div className="space-y-12 animate-in fade-in slide-in-from-right-4 duration-700">
                     <section>
-                        <h2 className="text-3xl font-bold text-white mb-6">Практика: Каталог и Карточки товаров</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">Каталог и Карточки товаров</h2>
                         <TheoryText>
-                            На этом этапе создадим универсальную карточку товара, страницу каталога и детальную страницу отдельного растения.
+                            На этом этапе мы создадим каталог товаров. Мы создадим универсальную карточку товара, страницу каталога и детальную страницу отдельного растения.
                             <b> Важно:</b> создавайте файлы строго по путям, указанным в заголовках.
                         </TheoryText>
                     </section>
@@ -238,6 +238,8 @@ const Lesson10BackendFull = ({ mode }) => {
                             Эта карточка будет отображать данные одного растения. Она будет просто вызываться на странице с товарами.
                             Нам не нужно будет 10 раз ее заново верстать, она <b>универсальная</b>. Мы просто берем и подставляем наши значения из БД.
                         </TheoryText>
+                        <TheoryImage src="/img/less15/1.png"/>
+
 
                         <CodeSnippet language="jsx" code={`import React from 'react';
 import { ShoppingCart, Heart, Eye } from 'lucide-react';
@@ -321,6 +323,7 @@ export default ProductCard;`} />
                         <TheoryText>
                             Здесь будет полноценный магазин: боковая панель с категориями слева и сетка товаров справа. Необязательно, чтобы у вас полностью работали фильтрация и сортировка. Основной минимум: вывод ваших товаров из БД.
                         </TheoryText>
+                        <TheoryImage src="/img/less15/2.png"/>
 
                         <CodeSnippet language="jsx" code={`import { useState, useEffect } from 'react';
 import api from '../api/axios';
@@ -464,7 +467,7 @@ export default Shop;`} />
                         <TheoryText>
                             Это то, что отображается при нажатии на ваш товар. В этом компоненте мы будем использовать хук <code>useParams</code>, чтобы вытащить ID из адресной строки и запросить данные конкретно этого товара у бэкенда.
                         </TheoryText>
-
+                        <TheoryImage src="/img/less15/3.png"/>
                         <CodeSnippet language="jsx" code={`import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ShoppingCart, ArrowLeft, Star, ShieldCheck } from 'lucide-react';
@@ -590,7 +593,7 @@ import Shop from './pages/Shop'; // Импортируем страницу ка
 import ProductPage from './pages/ProductPage'; // Импортируем страницу товара
 
 function App() {
-  return(
+  return
     <Router>
       <div className="flex flex-col min-h-screen">
         <Navbar />
@@ -625,8 +628,15 @@ export default App;`} />
                         </TheoryText>
                         <ol className="list-decimal list-inside text-slate-300 space-y-3 mt-4 mb-8 text-sm font-medium">
                             <li>Запустите <b>Open Server</b> (чтобы заработала база данных MySQL).</li>
-                            <li>Запустите ваш <b>Backend</b> (сервер на Node.js, который отдает данные). Убедитесь, что нет ошибок в консоли.</li>
-                            <li>Только теперь запускайте <b>Frontend</b> (этот React проект) командой <code className="text-blue-300">npm run dev</code>.</li>
+                            <li>Запустите ваш <b>Backend</b> (сервер на Node.js, который отдает данные). Убедитесь, что
+                                нет ошибок в консоли.
+                            </li>
+                            <li>Только теперь запускайте <b>Frontend</b> (этот React проект) командой <code
+                                className="text-blue-300">npm run dev</code>.
+                            </li>
+                            <li> Видоизмените карточки товара и каталог под ваш проект (цвета, стили, текст).
+                            </li>
+
                         </ol>
 
                         <InfoPanel title="Важно">
@@ -637,7 +647,7 @@ export default App;`} />
                             <h4 className="text-white font-bold mb-3 text-sm">Что можно сделать по желанию (дополнительно):</h4>
                             <ul className="space-y-2 text-xs text-slate-400">
                                 <li className="flex items-center gap-2"><span className="text-blue-500">●</span> <b>Корзина:</b> написать логику в Zustand, чтобы кнопка корзины действительно сохраняла товары.</li>
-                                <li className="flex items-center gap-2"><span className="text-blue-500">●</span> <b>Фильтры и сортировка:</b> доработать боковую панель в каталоге, чтобы она фильтровала товары по вашим реальным категориям из БД.</li>
+                                <li className="flex items-center gap-2"><span className="text-blue-500">●</span> <b>Фильтры и сортировка:</b> доработать боковую панель в каталоге, добавив больше опций по поиску.</li>
                             </ul>
                         </div>
                     </section>

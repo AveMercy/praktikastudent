@@ -324,7 +324,7 @@ const Lesson10BackendFull = ({ mode }) => {
                                     перенаправлялись на сервер Express (порт 5000). Это избавит нас от ошибок CORS.
                                 </InfoPanel>
                                 <CodeSnippet language="javascript"
-                                             code={`import { defineConfig } from 'vite'\nimport react from '@vitejs/plugin-react-swc'\nimport tailwindcss from '@tailwindcss'\n\nexport default defineConfig({\n  plugins: [\n    tailwindcss(), // Tailwind должен быть ПЕРЕД react() или ПЕРВЫМ в списке\n    react(),\n  ],\n  server: {\n    port: 5173,\n    proxy: {\n      '/api': 'http://localhost:5000',\n      '/uploads': 'http://localhost:5000'\n    }\n  }\n})`}/>
+                                             code={`import { defineConfig } from 'vite'\nimport react from '@vitejs/plugin-react-swc'\nimport tailwindcss from '@tailwindcss/vite'\n\nexport default defineConfig({\n  plugins: [\n    tailwindcss(), // Tailwind должен быть ПЕРЕД react() или ПЕРВЫМ в списке\n    react(),\n  ],\n  server: {\n    port: 5173,\n    proxy: {\n      '/api': 'http://localhost:5000',\n      '/uploads': 'http://localhost:5000'\n    }\n  }\n})`}/>
                             </div>
 
                             <div>
