@@ -17,6 +17,8 @@ import Lesson12 from './lessons/Lesson12.jsx';
 import Lesson13 from './lessons/Lesson13.jsx';
 import Lesson14 from './lessons/Lesson14.jsx';
 import Lesson15 from './lessons/Lesson15.jsx';
+import Lesson16 from './lessons/Lesson16.jsx';
+import Lesson17 from './lessons/Lesson17.jsx';
 
 
 
@@ -46,7 +48,8 @@ const lessons = [
     { id: 14, title: 'Фронтенд: Часть 3' },
     { id: 15, title: 'Фронтенд: Часть 4' },
 
-    { id: 15, title: 'Фронтенд: Часть 4' },
+    { id: 16, title: 'Фронтенд: Часть 5' },
+    { id: 17, title: 'Презетация проекта' },
 
 
 
@@ -84,6 +87,8 @@ const ContentWrapper = () => {
                 {activeLesson === 13 && <Lesson13 mode={mode} />}
                 {activeLesson === 14 && <Lesson14 mode={mode} />}
                 {activeLesson === 15 && <Lesson15 mode={mode} />}
+                {activeLesson === 16 && <Lesson16 mode={mode} />}
+                {activeLesson === 17 && <Lesson17 mode={mode} />}
 
 
 
