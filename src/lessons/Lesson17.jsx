@@ -167,10 +167,7 @@ const Lesson10BackendFull = ({ mode }) => {
                         </ul>
                     </section>
 
-                    <div className="mt-12 text-center p-8 border border-blue-500/30 rounded-[40px] bg-[#020617] shadow-2xl">
-                        <h2 className="text-3xl font-black text-white mb-2 uppercase tracking-widest">Желаю удачи на защите!</h2>
-                        <p className="text-slate-400">Вы проделали огромный путь от идеи до Fullstack-приложения. Гордитесь своим результатом.</p>
-                    </div>
+
                 </div>
             )}
         </div>
