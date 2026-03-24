@@ -593,7 +593,7 @@ import Shop from './pages/Shop'; // Импортируем страницу ка
 import ProductPage from './pages/ProductPage'; // Импортируем страницу товара
 
 function App() {
-  return
+  return(
     <Router>
       <div className="flex flex-col min-h-screen">
         <Navbar />
