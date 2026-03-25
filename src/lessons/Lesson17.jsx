@@ -49,8 +49,13 @@ const Lesson10BackendFull = ({ mode }) => {
             {/* --- РЕЖИМ ФАЙЛОВ --- */}
             {mode === 'files' && (
                 <div className="space-y-6">
-
-
+                    <h2 className="text-3xl font-bold mb-8 text-white">Материалы к лекции</h2>
+                    <div className="grid gap-4">
+                        <FileDownload
+                            name="Пример презентации.pdf"
+                            url="/downloads/pres/less17.pdf"
+                        />
+                    </div>
                 </div>
             )}
             {/* --- РЕЖИМ ПРАКТИКИ: ЧЕК-ЛИСТ И ТРЕБОВАНИЯ --- */}
