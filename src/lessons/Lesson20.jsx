@@ -20,18 +20,32 @@ const LessonDatabaseDesign = ({ mode }) => {
 
                     <section className="mb-12">
                         <TheoryText>
-                            Следующим шагом для проекта является создание базы данных (БД). Мы не будем проектировать огромную архитектуру, а создадим <b>минимум 1 таблицу</b>. Этого достаточно, чтобы понять принципы связи данных с проектом.
+                            Следующим шагом для проекта является создание базы данных (БД). Мы не будем проектировать огромную архитектуру, а создадим <b>минимум 2 таблицы</b>. Этого достаточно, чтобы понять принципы связи данных с проектом.
                         </TheoryText>
                         <TheoryText>
-                            На примере магазина <b>GreenShop</b> моя БД будет включать таблицу продуктов (растений). В вашем случае это может быть любой товар или услуга.
+                            На примере магазина <b>GreenShop</b> моя БД будет включать таблицы пользователей и продуктов (растений). В вашем случае это может быть любой товар или услуга.
                         </TheoryText>
                     </section>
 
+                    {/* 1. ТАБЛИЦА USERS */}
+                    <section className="mb-12">
+                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">1. Таблица users (Персонал и Клиенты)</h3>
+                        <TheoryText>
+                            В профессиональной разработке редко создают отдельные таблицы для админов и клиентов. Вместо этого используют одну таблицу с полем <code className="text-blue-300 bg-blue-500/10 px-2 py-0.5 rounded">role</code>.
+                        </TheoryText>
 
+                        <InfoPanel title="Зачем нужна роль?">
+                            Так проще реализовать систему входа (Login). Сервер проверяет логин/пароль в одной таблице, а затем смотрит на роль:
+                            <ul className="mt-2 space-y-1 text-slate-400 italic">
+                                <li>— «Ты админ — тебе можно в панель управления»</li>
+                                <li>— «Ты клиент — тебе доступна только корзина»</li>
+                            </ul>
+                        </InfoPanel>
+                    </section>
 
                     {/* 2. ТАБЛИЦА PRODUCTS */}
                     <section className="mb-12">
-                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">Таблица products (Товары)</h3>
+                        <h3 className="text-2xl font-bold text-blue-400 mb-6 tracking-tight">2. Таблица products (Товары)</h3>
                         <TheoryText>
                             Здесь хранится всё, что мы продаем. Для каждого товара (растения) нам понадобятся поля: название, цена, описание и ссылка на изображение.
                         </TheoryText>
@@ -94,18 +108,24 @@ const LessonDatabaseDesign = ({ mode }) => {
                                     <p className="font-bold text-white uppercase text-xs tracking-widest mb-1 text-blue-400">Шаг 2: Создание структуры</p>
                                     <ul className="list-disc ml-5 mt-2 space-y-2 text-sm text-slate-400">
                                         <li>Создайте БД с именем вашего проекта (например: <code className="text-blue-300">greenshop_db</code>).</li>
-                                        <li>Создайте таблицу  <b>products</b>.</li>
+                                        <li>Создайте таблицы <b>users</b> и <b>products</b> (минимум по 4-5 столбцов в каждой).</li>
                                         <li>Добавьте вручную 5 записей в таблицу с товарами через вкладку «Вставить».</li>
                                     </ul>
 
                                     <div className="mt-8 space-y-6">
+                                        <div>
+                                            <h4 className="text-white font-bold mb-2">Пример таблицы пользователей:</h4>
+                                            <p className="text-sm mb-4">
+                                                Для <code className="text-blue-400">id</code> обязательно указываем автозаполнение <b className="text-blue-400">(A_I)</b> и индекс <b className="text-blue-400">PRIMARY</b>.
+                                                Для остальных столбцов указываем тип и длину. Для роли указываем дефолтное значение — <span className="italic text-slate-400 text-xs">клиент</span>.
+                                            </p>
+                                            <TheoryImage src="/img/less7/1.png" alt="Структура таблицы users" />
+                                        </div>
 
                                         <div>
                                             <h4 className="text-white font-bold mb-2">Пример таблицы товаров:</h4>
                                             <p className="text-sm mb-4">
-                                                Для <code className="text-blue-400">id</code> обязательно указываем автозаполнение <b className="text-blue-400">(A_I)</b> и индекс <b className="text-blue-400">PRIMARY</b>.
-
-                                                Для остальных столбцов указываем тип и длину (например, VARCHAR для строк, INT для чисел) и длину. Для цены лучше использовать DECIMAL или INT.
+                                                Здесь тоже указываем везде правильные типы (например, VARCHAR для строк, INT для чисел) и длину. Для цены лучше использовать DECIMAL или INT.
                                             </p>
                                             <TheoryImage src="/img/less7/2.png" alt="Структура таблицы products" />
                                         </div>
@@ -113,14 +133,18 @@ const LessonDatabaseDesign = ({ mode }) => {
                                         <div className="p-6 bg-white/[0.02] border border-white/5 rounded-2xl">
                                             <h4 className="text-white font-bold mb-2">Заполнение данными:</h4>
                                             <p className="text-sm mb-4">
-                                                Заполняем таблицу записями.
+                                                Заполняем таблицу записями (пока таблицу пользователей не трогаем).
                                                 <b> Про изображения:</b> мы позже будем хранить их внутри проекта, поэтому в базе данных в поле картинки можете указывать путь <code className="text-blue-300">/uploads/название.png</code>, либо пока оставить пустым.
                                             </p>
                                             <TheoryImage src="/img/less7/3.png" alt="Заполнение таблицы записями" />
                                         </div>
                                     </div>
 
-
+                                    <InfoPanel title="Важно: Про пароли">
+                                        Мы никогда не храним пароли в чистом виде (например, "12345"). Мы храним <b>«хэш»</b>, который генерирует библиотека <code className="text-blue-300">bcrypt</code> на бэкенде.
+                                        <br/><br/>
+                                        <b>Записи для таблицы пользователей пока не создавайте вручную!</b> Мы сделаем это позже через код.
+                                    </InfoPanel>
                                 </div>
                             </li>
 

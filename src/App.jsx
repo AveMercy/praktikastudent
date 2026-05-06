@@ -22,6 +22,14 @@ import Lesson17 from './lessons/Lesson17.jsx';
 import Lesson18 from './lessons/Lesson18.jsx';
 import Lesson19 from './lessons/Lesson19.jsx';
 import Lesson20 from './lessons/Lesson20.jsx';
+import Lesson21 from './lessons/Lesson21.jsx';
+import Lesson22 from './lessons/Lesson22.jsx';
+import Lesson23 from './lessons/Lesson23.jsx';
+import Lesson24 from './lessons/Lesson24.jsx';
+import Lesson25 from './lessons/Lesson25.jsx';
+
+
+
 
 
 
@@ -54,9 +62,17 @@ const lessons = [
 
     { id: 16, title: 'Фронтенд: Часть 5' },
     { id: 17, title: 'Презетация проекта' },
-    { id: 18, title: '2ИСИП: Часть 1' },
-    { id: 19, title: '2ИСИП: Часть 2' },
-    { id: 20, title: '2ИСИП: Часть 3' },
+    { id: 18, title: '2ИСИП: Создание ' },
+    { id: 19, title: '2ИСИП: Фронтенд-1' },
+    { id: 20, title: '2ИСИП: БД' },
+    { id: 21, title: '2ИСИП: Бэкенд-1' },
+    { id: 22, title: '2ИСИП: Бэкенд-2' },
+    { id: 23, title: '2ИСИП: Фронтенд-2' },
+    { id: 24, title: '2ИСИП: Фронтенд-3' },
+    { id: 25, title: '2ИСИП: Фронтенд-4' },
+
+
+
 
 
 
@@ -101,6 +117,12 @@ const ContentWrapper = () => {
                 {activeLesson === 18 && <Lesson18 mode={mode} />}
                 {activeLesson === 19 && <Lesson19 mode={mode} />}
                 {activeLesson === 20 && <Lesson20 mode={mode} />}
+                {activeLesson === 21 && <Lesson21    mode={mode} />}
+                {activeLesson === 22 && <Lesson22    mode={mode} />}
+                {activeLesson === 23 && <Lesson23    mode={mode} />}
+                {activeLesson === 24 && <Lesson24    mode={mode} />}
+                {activeLesson === 25 && <Lesson25    mode={mode} />}
+
 
 
 
