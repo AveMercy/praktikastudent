@@ -17,7 +17,7 @@ const LessonStructureProject = ({ mode }) => {
                         Лекция 3: Структура проекта и базовые компоненты
                     </h2>
 
-                    {/* 1. СТРУКТУРА ПРОЕКТА */}
+                    {/* 1. СТРУКТУРА  ПРОЕКТА */}
                     <section className="relative pl-12 border-l-2 border-blue-500/30">
                         <div className="absolute -left-4 top-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center font-bold text-white shadow-lg">1</div>
                         <h3 className="text-2xl font-bold text-white mb-6">Организация файлов: порядок с первого дня</h3>
