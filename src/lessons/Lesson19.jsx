@@ -806,7 +806,50 @@ export default Home;`}/>
                         <TheoryImage src="/img/less14/1.png"/>
 
                     </section>
+                    {/* ШАГ 3: ROUTING */}
+                    <section className="relative pl-12 border-l-2 border-blue-500/30">
+                        <div
+                            className="absolute -left-4 top-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center font-bold text-white shadow-lg">4
+                        </div>
+                        <h3 className="text-2xl font-bold text-white mb-6">Подготовка главного Роутинга</h3>
+                        <div className="mb-4">
+                            <span className="text-[16px] font-mono text-slate-500 italic">Файл: src/App.jsx</span>
+                        </div>
+                        <TheoryText>
+                            <b>Роутинг</b> — это система навигации. Она позволяет нам менять содержимое страницы в
+                            зависимости от URL в адресной строке, не перезагружая браузер полностью.
+                        </TheoryText>
 
+                        <CodeSnippet language="jsx" code={`import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/layout/Navbar'; // Шапка сайта
+import Footer from './components/layout/Footer'; // Подвал сайта
+import Home from './pages/Home'; // Главная страница
+
+function App() {
+  return (
+    /* Router — должен оборачивать все приложение, чтобы работала навигация */
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        {/* Navbar и Footer находятся ВНЕ Routes, поэтому они видны на каждой странице */}
+        <Navbar />
+
+        <main className="flex-grow">
+          <Routes>
+              <Route path="/" element={<Home />} />
+                {/* Здесь будут страницы, которые мы разработаем позже */}
+
+          </Routes>
+        </main>
+
+        <Footer />
+      </div>
+    </Router>
+  );
+}
+
+export default App;`}/>
+
+                    </section>
                     {/* ШАГ 4: ЗАПУСК ПРИЛОЖЕНИЯ */}
                     <section className="space-y-6 mt-12 pt-8 border-t border-emerald-500/30">
                         <div className="flex items-center gap-4">
@@ -841,6 +884,7 @@ export default Home;`}/>
                             виду, который соотвествуеет теме вашего проекта. Изменения в коде будут отображаться в браузере сразу после изменения и сохранения кода (Ctrl+S)
                         </TheoryText>
                     </section>
+
                 </div>
             )}
         </div>
